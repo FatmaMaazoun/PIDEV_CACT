@@ -75,9 +75,6 @@ class Destination
      * @ORM\OneToMany(targetEntity=CoutCategorie::class, mappedBy="destination", orphanRemoval=true)
      */
     private $coutCategories;
-
-
-
     /**
      * @ORM\OneToMany(targetEntity=Cout::class, mappedBy="destination", orphanRemoval=true)
      */

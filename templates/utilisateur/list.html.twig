@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+     {% block title %}Liste des utilisateurs{% endblock %}
+{% block body %}
+    <h1 style="margin-left:720px;text-align:center" ><strong style=" color: #2C3E50">Liste des utilisateurs  </strong> </h1>
+{% if utilisateurs%}
+<table border="1" id="utilisateurs" class="table table-avatar text-nowrap table-bordered table-striped" style="width:1500px;height:900px;margin-left:180px;margin-top:1%">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>login</th>
+        <th>password</th>
+        <th>role</th>
+        <th>nom</th>
+        <th>prenom</th>
+        <th>date_naissance</th>
+        <th>email</th>
+        <th>num_tel</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for utilisateur in utilisateurs %}
+    <tr>
+        <td>{{ utilisateur.id }}</td>
+        <td >{{ utilisateur.login }}</td>
+        <td>{{ utilisateur.password }}</td>
+        <td>{{ utilisateur.role }}</td>
+        <td>{{ utilisateur.nom }}</td>
+        <td>{{ utilisateur.prenom }}</td>
+        <td>{{ utilisateur.getDateNaissance()|date('d-m-y')}}</td>
+        <td>{{ utilisateur.email }}</td>
+        <td>{{ utilisateur.getNumTel()|number_format}}</td>
+        <td><a href="{{  path('edit_utilisateurs',{id:utilisateur.id})}}"> <button class="btn btn-secondary">Modifier</button></a></td>
+        <td><a href="{{  path('deleteutilisateur',{id:utilisateur.id})}}" onclick="return confirm('Etes-vous sur de supprimer cet utilisateur?');">
+                <button class="btn btn-danger" >Supprimer</button> </a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    <nav>
+        <a href="{{  path('addutilisateurs') }}"><button class="btn btn-primary btn-lg" style="margin-left:800px;">Ajouter</button> </a> </nav>
+    {% else  %}
+    <p>Aucun utilisateur</p>
+    {% endif %}
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
@@ -26,11 +27,12 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
     private $role;
 
@@ -51,6 +53,9 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
+     * * @Assert\NotBlank(message="Email est obligatoire")
+     * ** @Assert\Email(message = "The email '{{ value }}' est invalide
+    email.")
      */
     private $email;
 
