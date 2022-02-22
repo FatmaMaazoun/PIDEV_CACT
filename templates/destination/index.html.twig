@@ -1,7 +1,88 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DestinationController!{% endblock %}
+
+
 
 {% block body %}
-bon courage fatouma
+
+
+
+<!--Create categorie-->
+<button class="btn btn-secondary">Ajouter une destination</button>
+<!-- /Create ctaegorie-->
+ 
+
+<!-- /.row -->
+<div class="row fixed" style="margin-left:5%;margin-top:5%">
+    <div class="col-16">
+      <div class="card">
+        <div class="card-header">
+          <h3  >Liste des Destinations</h3>
+
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-default">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height:400px;width:1000px;">
+          <table class="table table-head-fixed  table align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>telephone</th>
+                <th>Description</th>
+                <th>Sous categorie</th>
+                <th>Adresse</th>
+                <th>Delegations</th>
+                <th>Image</th>
+                <th>editer</th>
+                <th>supprimer</th>
+
+              </tr>
+            </thead>
+            <tbody>
+                {% for des in liste_destination %}
+              <tr>
+                <td>{{des.id}}</td>
+                <td>{{des.nom}}</td>
+                <td>{{des.email}}</td>
+                <td>{{des.numTel}}</td>
+                <td>{{des.description}} </td>
+                <td>{{des.souscategorie.libelle}}</td>
+                <td>{{des.adresse}}</td>
+                <td>{{des.delegation.nom}}</td>
+                <td><img src="{{ asset ('upload/image/'~ des.image)}}"  style="width:40px;height:40px"/></td>
+                ><td><a href="{{path('update_destination',{'id':des.id})}}" class="nav-link" style="color:rgb(224, 110, 3);">
+                    <i class="nav-icon fas fa-edit"></i></a></td>
+                <td><a href="{{path('delete_destination',{'id':des.id})}}" class="nav-link " style="color:rgb(190, 18, 18);">
+                    <i class="nav-icon fas fa-trash"></i></a></td>
+                
+               
+              </tr>
+              {% endfor %}
+             
+                
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+  
+   
+
+  
 {% endblock %}

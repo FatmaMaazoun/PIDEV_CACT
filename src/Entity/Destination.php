@@ -19,15 +19,6 @@ class Destination
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $Date_Demande_des;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $statut;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,7 +28,7 @@ class Destination
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -52,7 +43,7 @@ class Destination
     /**
      * @ORM\Column(type="integer")
      */
-    private $num_tel;
+    private $numTel;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -65,23 +56,6 @@ class Destination
      */
     private $souscategorie;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="destinations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $utilisateur;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CoutCategorie::class, mappedBy="destination", orphanRemoval=true)
-     */
-    private $coutCategories;
-
-
-
-    /**
-     * @ORM\OneToMany(targetEntity=Cout::class, mappedBy="destination", orphanRemoval=true)
-     */
-    private $couts;
 
     /**
      * @ORM\ManyToOne(targetEntity=Delegation::class, inversedBy="destinations")
@@ -91,10 +65,6 @@ class Destination
 
     public function __construct()
     {
-        $this->coutCategories = new ArrayCollection();
-
-
-        $this->couts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,29 +72,6 @@ class Destination
         return $this->id;
     }
 
-    public function getDateDemandeDes(): ?\DateTimeInterface
-    {
-        return $this->Date_Demande_des;
-    }
-
-    public function setDateDemandeDes(\DateTimeInterface $Date_Demande_des): self
-    {
-        $this->Date_Demande_des = $Date_Demande_des;
-
-        return $this;
-    }
-
-    public function getStatut(): ?string
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(string $statut): self
-    {
-        $this->statut = $statut;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -138,24 +85,24 @@ class Destination
         return $this;
     }
 
-    public function getLibelle(): ?string
+    public function getNom(): ?string
     {
-        return $this->libelle;
+        return $this->nom;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setNom(string $nom): self
     {
-        $this->libelle = $libelle;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage(?string $image): self
+    public function setImage($image): self
     {
         $this->image = $image;
 
@@ -176,12 +123,12 @@ class Destination
 
     public function getNumTel(): ?int
     {
-        return $this->num_tel;
+        return $this->numTel;
     }
 
-    public function setNumTel(int $num_tel): self
+    public function setNumTel(int $numTel): self
     {
-        $this->num_tel = $num_tel;
+        $this->numTel = $numTel;
 
         return $this;
     }
@@ -206,80 +153,6 @@ class Destination
     public function setSouscategorie(?SousCategorie $souscategorie): self
     {
         $this->souscategorie = $souscategorie;
-
-        return $this;
-    }
-
-    public function getUtilisateur(): ?Utilisateur
-    {
-        return $this->utilisateur;
-    }
-
-    public function setUtilisateur(?Utilisateur $utilisateur): self
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, CoutCategorie>
-     */
-    public function getCoutCategories(): Collection
-    {
-        return $this->coutCategories;
-    }
-
-    public function addCoutCategory(CoutCategorie $coutCategory): self
-    {
-        if (!$this->coutCategories->contains($coutCategory)) {
-            $this->coutCategories[] = $coutCategory;
-            $coutCategory->setDestination($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCoutCategory(CoutCategorie $coutCategory): self
-    {
-        if ($this->coutCategories->removeElement($coutCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($coutCategory->getDestination() === $this) {
-                $coutCategory->setDestination(null);
-            }
-        }
-
-        return $this;
-    }
-
-
-
-    /**
-     * @return Collection<int, Cout>
-     */
-    public function getCouts(): Collection
-    {
-        return $this->couts;
-    }
-
-    public function addCout(Cout $cout): self
-    {
-        if (!$this->couts->contains($cout)) {
-            $this->couts[] = $cout;
-            $cout->setDestination($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCout(Cout $cout): self
-    {
-        if ($this->couts->removeElement($cout)) {
-            // set the owning side to null (unless already changed)
-            if ($cout->getDestination() === $this) {
-                $cout->setDestination(null);
-            }
-        }
 
         return $this;
     }

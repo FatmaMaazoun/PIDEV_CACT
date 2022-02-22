@@ -18,6 +18,16 @@ class DelegationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Delegation::class);
     }
+    public function listDELByGOUV($id)
+    {
+        return $this->createQueryBuilder('d')
+            ->join('d.gouvernorat', 'c')
+            ->addSelect('c')
+            ->where('c.id=:id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Delegation[] Returns an array of Delegation objects

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{{ asset ('plugins/fontawesome-free/css/all.min.css')}}">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="{{ asset ('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{{ asset ('dist/css/adminlte.min.css')}}">
+{% endblock %}
+
+{% block javascripts %}
+<!-- jQuery -->
+<script src="{{ asset ('plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset ('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ asset ('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset ('dist/js/adminlte.min.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset ('dist/js/demo.js')}}"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+{% endblock %}
+
+
+
+
+
+
+{% block body %}
+{{ form_start(form,{'attr': {'novalidate':'novalidate'}} ) }}
+<div class="content" style="width:900px;height: 900px;margin-left:30px;margin-top:10%">
+  <div class="card card-secondary">
+  <div class="card-header">
+  <h3 class="card-title">Editer une catégorie-tarif</h3>
+ 
+  </div>
+  <div class="card-body">
+  <div class="form-group">
+  {{ form_row(form.libelle, {attr: {class: 'form-control '} }) }}
+  </div>
+  <div class="form-group">
+  {{ form_row(form.description , {attr: {class: 'form-control'}}) }}
+</div>
+
+<div class="modal-footer justify-content-between">
+
+
+  <a type="button" href="{{path('read_cout_categorie')}}" class="btn btn-secondary ">Retour</a>
+   {{ form_row(form.update,{attr: {class: 'btn btn-primary'}}) }}
+
+
+
+{{ form_end(form) }}
+
+  </div>
+  
+  </div>
+  
+  </div>
+  </div>
+ 
+  </section>
+  
+  </div>
+{% endblock %}

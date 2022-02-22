@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="row fixed" style="margin-left:5%">
+    <div class="col-16">
+      <div class="card">
+        <div class="card-header">
+          <h4  >Liste des Gouvernorats
+          
+          </h4>
+          
+          
+           
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 350px;width:900px;">
+          <table class="table table-head-fixed  table align-middle">
+                <thead style="text-align:center;">
+                <tr>
+                <th style="width: 90px">#</th>
+                <th width="350px;">Nom</th>
+                <th style="width: 350px">Délégations</th>
+                <th "width: 10px">Nombre de délégations </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for gouv in liste_gouvernorat %}
+               
+               
+                <tr > 
+                   
+                    <td style="text-align:center;">{{ gouv.id }}</td>
+                    <td style="text-align:center;">{{ gouv.nom }}</td>
+                    
+                    <td style="text-align:center;">{{ render(controller('App\\Controller\\GouvernoratController:delegations',  { 'id': gouv.id })) }}
+                    </td>
+                    <td >{{ render(controller('App\\Controller\\GouvernoratController:nbrdel',  { 'id': gouv.id })) }}</td>
+                    
+                  
+
+                    
+                
+                
+                </tr>
+                {% endfor %}
+
+
+                </tbody>
+                </table>
+                </div>
+              
+{% endblock %}
+
