@@ -22,17 +22,7 @@ class DemandeEvenementController extends AbstractController
             'controller_name' => 'DemandeEvenementController',
         ]);
     }
-     /**
-     * @Route("/demande/evenement1", name="demande_evenement")
-     */
-    public function index1(): Response
-    {
-        return $this->render('front.html.twig', [
-            'controller_name' => 'DemandeEvenementController',
-        ]);
-    }
-    
-    
+   
      /**
      * @Route("/demande/evenement/Affiche",name="Affiche")
      */
