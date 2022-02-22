@@ -42,11 +42,7 @@ class CoutCategorie
      */
     private $destination;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=CoutCategorie::class, inversedBy="coutCategories")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $coutcategorie;
+  
 
     /**
      * @ORM\OneToMany(targetEntity=CoutCategorie::class, mappedBy="coutcategorie", orphanRemoval=true)
@@ -125,17 +121,7 @@ class CoutCategorie
         return $this;
     }
 
-    public function getCoutcategorie(): ?self
-    {
-        return $this->coutcategorie;
-    }
-
-    public function setCoutcategorie(?self $coutcategorie): self
-    {
-        $this->coutcategorie = $coutcategorie;
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, self>
