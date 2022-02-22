@@ -1,0 +1,47 @@
+{% extends 'demande_evenement/bootStrap.html.twig' %}
+{% block title %}Hello DemandeEvenementController!{% endblock %}
+{% block body %}
+	<body>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+      <table id="example1" class="table table-bordered table-striped">
+
+<thead>
+<tr>
+<th>Origine</th>
+<th>Distination</th>
+<th>Date Demande</th>
+<th>Description demande</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+{{dump(listDemandeEvenementById)}}
+{% for ld in listDemandeEvenementById %}
+<td>{{ld.getDestination().getUtilisateur().getNom()}}</td>
+<td>{{ld.getDestination().getUtilisateur().getPrenom()}}</td>
+<td>{{ld.getDescriptionDemande()}}</td>
+<td>{{ld.getDateDemande()|date()}}</td>
+<td>{{ld.getDestination().getLibelle()}}</td>
+</tr>
+{%endfor%}
+{{dump(listDemandeEvenementById)}}
+</tbody>
+<tfoot>
+</tfoot>
+</table>
+</div>
+  </div>
+</div>
+</body>
+	</html>
+    {% endblock %}

@@ -1,7 +1,110 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello DemandeEvenementController!{% endblock %}
-{% block body %}
-Bon courage farouha
 
+{% block body %}
+<section class="content">
+    <div class="container-fluid">
+      <div class="row ">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="form-inline justify-content-between">
+  
+                <div class=" my-2 my-sm-0" >
+                  <div class="input-group input-group-sm " style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control   " placeholder="Search"  placeholder="Search">
+                    <div class="input-group-append">
+                      <button  class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+  
+              </div>
+            </div>
+           
+  <div class="card-body">
+<table id="example1" class="table table-bordered table-striped">
+
+<thead>
+
+<tr>
+<th>Origine</th>
+<th>Distination</th>
+<th>Date Demande</th>
+<th>Description demande</th>
+<th>Evenement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+{% for lde in listDemandeEvenement  %}
+<td>{{lde.getDestination().getUtilisateur().getNom()}}</td>
+<td>{{lde.getDescriptionDemande()}}</td>
+<td>{{lde.getDateDemande()|date()}}</td>
+<td>{{lde.getDestination().getLibelle()}}</td>
+<td><a href="{{ path('i',{'id':lde.getId()})}}">
+<input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"></button>
+</a></td>
+  <td> <a href="{{ path('deleteDemandeEvenement',{'id':lde.id}) }}">Delete</a></td>
+  <td><a href="{{ path('updateDemandeEvenement',{'id':lde.id}) }}">Update</a></td>
+</tr>
+ 
+{%endfor%}
+
+</tbody>
+<tfoot>
+</tfoot>
+</table>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+  
+  <div >
+ <pagination-controls id= 'DBPagination'  (pageChange)="currentPg = $event"></pagination-controls>
+ 
+ </div>
+</div>
+
+
+
+
+
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+{% endblock %}
+{% block bootStrap %}
+	<link rel="stylesheet" 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+	<script 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	                $(document).ready(function(){
+	                               $("#monModal").modal('show');
+	                });
+	</script>
 {% endblock %}

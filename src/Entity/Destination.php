@@ -83,11 +83,12 @@ class Destination
      */
     private $couts;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Delegation::class, inversedBy="destinations")
-     * @ORM\JoinColumn(nullable=false)
+
+     /**
+     * @ORM\OneToMany(targetEntity=CoutCategorie::class, mappedBy="destination", orphanRemoval=true)
      */
-    private $delegation;
+    private $DemandeEvenements;
+   
 
     public function __construct()
     {
@@ -222,6 +223,8 @@ class Destination
         return $this;
     }
 
+
+
     /**
      * @return Collection<int, CoutCategorie>
      */
@@ -283,6 +286,38 @@ class Destination
 
         return $this;
     }
+
+ /**
+     * @return Collection|DemandeEvenement[]
+     */
+    public function getDemandeEvenements(): Collection
+    {
+        return $this->DemandeEvenements;
+    }
+
+    public function addDemandeEvenement(DemandeEvenement $demandeEvenement): self
+    {
+        if (!$this->demandeEvenements->contains($demandeEvenement)) {
+            $this->demandeEvenements[] = $demandeEvenement;
+            $demandeEvenement->setDestination($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeEvenement(DemandeEvenement $demandeEvenement): self
+    {
+        if ($this->demandeEvenements->removeElement($demandeEvenement)) {
+            // set the owning side to null (unless already changed)
+            if ($DemandeEvenement->getDemandeEvenement() === $this) {
+                $demandeEvenement->setDestination(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
     public function getDelegation(): ?Delegation
     {
