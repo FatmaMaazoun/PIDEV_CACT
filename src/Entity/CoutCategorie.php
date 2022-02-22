@@ -31,43 +31,11 @@ class CoutCategorie
 
 
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $prix;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="coutCategories")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $destination;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=CoutCategorie::class, inversedBy="coutCategories")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $coutcategorie;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CoutCategorie::class, mappedBy="coutcategorie", orphanRemoval=true)
-     */
-    private $coutCategories;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CoutEvenement::class, mappedBy="coutcategorie", orphanRemoval=true)
-     */
-    private $coutEvenements;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Cout::class, mappedBy="coutcategorie", orphanRemoval=true)
-     */
-    private $couts;
 
     public function __construct()
     {
-        $this->coutCategories = new ArrayCollection();
-        $this->coutEvenements = new ArrayCollection();
-        $this->couts = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -101,6 +69,8 @@ class CoutCategorie
 
 
 
+<<<<<<< HEAD
+=======
     public function getPrix(): ?float
     {
         return $this->prix;
@@ -125,17 +95,7 @@ class CoutCategorie
         return $this;
     }
 
-    public function getCoutcategorie(): ?self
-    {
-        return $this->coutcategorie;
-    }
-
-    public function setCoutcategorie(?self $coutcategorie): self
-    {
-        $this->coutcategorie = $coutcategorie;
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, self>
@@ -204,4 +164,5 @@ class CoutCategorie
     {
         return $this->couts;
     }
+>>>>>>> b37083fe262125c823e52cf5d0272f94018987d3
 }
