@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220217232040 extends AbstractMigration
+final class Version20220220223939 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,7 +24,7 @@ final class Version20220217232040 extends AbstractMigration
         $this->addSql('CREATE TABLE billet (id INT AUTO_INCREMENT NOT NULL, reservation_id INT NOT NULL, cout_event_id INT NOT NULL, nombre_billet INT NOT NULL, INDEX IDX_1F034AF6B83297E7 (reservation_id), INDEX IDX_1F034AF62F62617D (cout_event_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE categorie (id INT AUTO_INCREMENT NOT NULL, libelle VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE cout (id INT AUTO_INCREMENT NOT NULL, destination_id INT NOT NULL, coutcategorie_id INT NOT NULL, prix DOUBLE PRECISION NOT NULL, INDEX IDX_4E7C337A816C6140 (destination_id), INDEX IDX_4E7C337A39251E26 (coutcategorie_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE cout_categorie (id INT AUTO_INCREMENT NOT NULL, destination_id INT NOT NULL, coutcategorie_id INT NOT NULL, libelle VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, prix DOUBLE PRECISION NOT NULL, INDEX IDX_1DFD1494816C6140 (destination_id), INDEX IDX_1DFD149439251E26 (coutcategorie_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE cout_categorie (id INT AUTO_INCREMENT NOT NULL, destination_id INT NOT NULL, libelle VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, prix DOUBLE PRECISION NOT NULL, INDEX IDX_1DFD1494816C6140 (destination_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE cout_evenement (id INT AUTO_INCREMENT NOT NULL, coutcategorie_id INT NOT NULL, demande_event_id INT NOT NULL, nb_billet INT NOT NULL, prix DOUBLE PRECISION NOT NULL, INDEX IDX_5FA6AABE39251E26 (coutcategorie_id), INDEX IDX_5FA6AABE37AEA149 (demande_event_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE delegation (id INT AUTO_INCREMENT NOT NULL, gouvernorat_id INT NOT NULL, nom VARCHAR(255) NOT NULL, INDEX IDX_292F436D75B74E2D (gouvernorat_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE demande_evenement (id INT AUTO_INCREMENT NOT NULL, destination_id INT NOT NULL, date_demande DATE NOT NULL, statut VARCHAR(255) NOT NULL, description_demande VARCHAR(255) NOT NULL, date_debut_event DATE NOT NULL, date_fin_event DATE NOT NULL, heure_debut_event TIME NOT NULL, heure_fin_event TIME NOT NULL, description_event VARCHAR(255) NOT NULL, capacite INT NOT NULL, INDEX IDX_7E0A92CB816C6140 (destination_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -43,7 +43,6 @@ final class Version20220217232040 extends AbstractMigration
         $this->addSql('ALTER TABLE cout ADD CONSTRAINT FK_4E7C337A816C6140 FOREIGN KEY (destination_id) REFERENCES destination (id)');
         $this->addSql('ALTER TABLE cout ADD CONSTRAINT FK_4E7C337A39251E26 FOREIGN KEY (coutcategorie_id) REFERENCES cout_categorie (id)');
         $this->addSql('ALTER TABLE cout_categorie ADD CONSTRAINT FK_1DFD1494816C6140 FOREIGN KEY (destination_id) REFERENCES destination (id)');
-        $this->addSql('ALTER TABLE cout_categorie ADD CONSTRAINT FK_1DFD149439251E26 FOREIGN KEY (coutcategorie_id) REFERENCES cout_categorie (id)');
         $this->addSql('ALTER TABLE cout_evenement ADD CONSTRAINT FK_5FA6AABE39251E26 FOREIGN KEY (coutcategorie_id) REFERENCES cout_categorie (id)');
         $this->addSql('ALTER TABLE cout_evenement ADD CONSTRAINT FK_5FA6AABE37AEA149 FOREIGN KEY (demande_event_id) REFERENCES demande_evenement (id)');
         $this->addSql('ALTER TABLE delegation ADD CONSTRAINT FK_292F436D75B74E2D FOREIGN KEY (gouvernorat_id) REFERENCES gouvernorat (id)');
@@ -65,7 +64,6 @@ final class Version20220217232040 extends AbstractMigration
         $this->addSql('ALTER TABLE produit DROP FOREIGN KEY FK_29A5EC27197E709F');
         $this->addSql('ALTER TABLE sous_categorie DROP FOREIGN KEY FK_52743D7BBCF5E72D');
         $this->addSql('ALTER TABLE cout DROP FOREIGN KEY FK_4E7C337A39251E26');
-        $this->addSql('ALTER TABLE cout_categorie DROP FOREIGN KEY FK_1DFD149439251E26');
         $this->addSql('ALTER TABLE cout_evenement DROP FOREIGN KEY FK_5FA6AABE39251E26');
         $this->addSql('ALTER TABLE billet DROP FOREIGN KEY FK_1F034AF62F62617D');
         $this->addSql('ALTER TABLE destination DROP FOREIGN KEY FK_3EC63EAA56CBBCF5');
