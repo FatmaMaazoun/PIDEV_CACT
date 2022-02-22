@@ -69,4 +69,100 @@ class CoutCategorie
 
 
 
+<<<<<<< HEAD
+=======
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getDestination(): ?Destination
+    {
+        return $this->destination;
+    }
+
+    public function setDestination(?Destination $destination): self
+    {
+        $this->destination = $destination;
+
+        return $this;
+    }
+
+   
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getCoutCategories(): Collection
+    {
+        return $this->coutCategories;
+    }
+
+    public function addCoutCategory(self $coutCategory): self
+    {
+        if (!$this->coutCategories->contains($coutCategory)) {
+            $this->coutCategories[] = $coutCategory;
+            $coutCategory->setCoutcategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoutCategory(self $coutCategory): self
+    {
+        if ($this->coutCategories->removeElement($coutCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($coutCategory->getCoutcategorie() === $this) {
+                $coutCategory->setCoutcategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CoutEvenement>
+     */
+    public function getCoutEvenements(): Collection
+    {
+        return $this->coutEvenements;
+    }
+
+    public function addCoutEvenement(CoutEvenement $coutEvenement): self
+    {
+        if (!$this->coutEvenements->contains($coutEvenement)) {
+            $this->coutEvenements[] = $coutEvenement;
+            $coutEvenement->setCoutcategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoutEvenement(CoutEvenement $coutEvenement): self
+    {
+        if ($this->coutEvenements->removeElement($coutEvenement)) {
+            // set the owning side to null (unless already changed)
+            if ($coutEvenement->getCoutcategorie() === $this) {
+                $coutEvenement->setCoutcategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cout>
+     */
+    public function getCouts(): Collection
+    {
+        return $this->couts;
+    }
+>>>>>>> b37083fe262125c823e52cf5d0272f94018987d3
 }
