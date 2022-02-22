@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+ {% block title %}
+     <h1> Liste des Reservations </h1>
+ {% endblock %}
+
+ {% block body %}
+<table border="1">
+    <tr>
+        <th scope="row">ID</th>
+        <th scope="row">Date Reservation</th>
+        <th scope="row">Heure Reservation</th>
+        <th scope="row">Statut</th>
+        <th scope="row">Cout</th>
+
+
+    </tr>
+     {% for res in reservation %}
+     <tr>
+         <td>{{ res.id}} </td>
+         <td>{{ res.getDateRes()|date('d-m-y') }}</td>
+         <td>{{ res.getHeureRes()|date(' H:i:s') }}</td>
+         <td>{{ res.statut }}</td>
+         <td>{{ res.cout }}</td>
+         <td><a href="{{  path('updatereservation',{id:res.id})}}"> <button class="btn btn-secondary">Modifier</button></a> </td>
+         <td><a href="{{  path('deletereservation',{id:res.id})}}" onclick="return confirm('Etes-vous sur de supprimer cette reservation?');">
+                 <button class="btn btn-danger" >Supprimer</button> </a></td>
+     </tr>
+     {% endfor %}
+</table>
+    <div style="margin-left:50px;"> <a class="btn-info" href="{{path('newreservation')}}"> Ajouter une nouvelle Reservation </a>
+    </div>
+
+    {% endblock %}
