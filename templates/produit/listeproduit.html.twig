@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <table border="1">
+        <tr>
+            <td>id</td>
+            <td>description</td>
+            <td>avis</td>
+            <td>media</td>
+        </tr>
+        {% for produit in produi %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.description }}</td>
+                <td>{{ produit.avis }}</td>
+                <td>{% for media in produit.media %}
+                {{ media.id }}</td>
+                {% endfor %}
+                <td><a href="{{  path('prod_delete',{id:produit.id})}}" onclick="return confirm('Etes-vous sur de supprimer ce produit?');">
+                        <button class="btn btn-danger" >Supprimer</button> </a></td>
+                <td><a href="{{  path('prod_update',{id:produit.id})}}" >
+                        <button class="btn btn-danger" >Modifier</button> </a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <td><a href="{{  path('prod_add')}}" >
+            <button class="btn btn-danger" >Ajouter</button> </a></td>
+{% endblock %}
