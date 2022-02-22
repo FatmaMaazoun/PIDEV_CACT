@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+ {% block title %}
+     <h1> Liste des Reclamations </h1>
+ {% endblock %}
+
+ {% block body %}
+<table border="1">
+    <tr>
+        <th scope="row">ID</th>
+        <th scope="row">Nombre de Billets</th>
+
+    </tr>
+    {% for bill in billet %}
+    <tr>
+        <td>{{ bill.id}} </td>
+        <td>{{ bill.getNombreBillet()}} </td>
+        <td><a href="{{  path('updatebillet',{id:bill.id})}}"> <button class="btn btn-secondary">Modifier</button></a> </td>
+        <td><a href="{{  path('deletebillet',{id:bill.id})}}" onclick="return confirm('Etes-vous sur de supprimer cette billet?');">
+                <button class="btn btn-danger" >Supprimer</button> </a></td>
+    </tr>
+        {% endfor %}
+</table>
+     <div style="margin-left:50px;"> <a class="btn-info" href="{{path('newbillet')}}"> Ajouter une nouvelle Billet </a>
+     </div>
+{% endblock %}

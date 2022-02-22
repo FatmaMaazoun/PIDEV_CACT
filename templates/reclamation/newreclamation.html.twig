@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1> Ajouter une Reclamation </h1>
+    {{form_start(form)}}
+    {{form_widget(form)}}
+    {{form_end(form)}}
+
+    <a class="btn btn-danger" href="{{ path('listrec') }}"> Go TO List </a>
+
+{% endblock %}

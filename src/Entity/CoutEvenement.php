@@ -133,4 +133,8 @@ class CoutEvenement
 
         return $this;
     }
+    public function __toString()
+    {
+        return "bonjour";
+    }
 }
