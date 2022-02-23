@@ -41,7 +41,7 @@ class DelegationController extends AbstractController
             $em->flush();
 
 
-            return $this->redirectToRoute('read_gouvernorat');
+            return $this->redirectToRoute('read_delegation');
         } else {
             return $this->render('delegation/adddelegation.html.twig', [
                 'form' => $form->createView()
