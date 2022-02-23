@@ -69,8 +69,8 @@ class CoutCategorie
 
 
 
-<<<<<<< HEAD
-=======
+
+
     public function getPrix(): ?float
     {
         return $this->prix;
@@ -164,5 +164,4 @@ class CoutCategorie
     {
         return $this->couts;
     }
->>>>>>> b37083fe262125c823e52cf5d0272f94018987d3
 }

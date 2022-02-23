@@ -17,7 +17,7 @@
              <tr>
                  <td>{{ rec.id}} </td>
                  <td>{{ rec.type}} </td>
-                 <td>{{ rec.description }}</td>
+                 <td>{{ rec.getDescription }}</td>
                  <td>{{ rec.getDateRec()|date('d-m-y') }}</td>
                  <td><a href="{{  path('updatereclamation',{id:rec.id})}}"> <button class="btn btn-secondary">Modifier</button></a> </td>
                  <td><a href="{{  path('deletereclamation',{id:rec.id})}}" onclick="return confirm('Etes-vous sur de supprimer cette reclamation?');">
