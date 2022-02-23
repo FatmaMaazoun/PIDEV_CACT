@@ -72,11 +72,11 @@ class UtilisateurController extends AbstractController
      */
     public function deleteUtilisateur($id)
     {
-        $user=$this->getDoctrine()->getRepository(Utilisateur::class)->find($id);
-        $em=$this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getRepository(Utilisateur::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
-        $response=new Response();
+        $response = new Response();
         $response->send();
         return $this->redirectToRoute('listutilisateurs');
     }

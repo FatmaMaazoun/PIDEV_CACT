@@ -82,6 +82,5 @@ class MediaController extends AbstractController
             'media' => $media,
             'form' => $form->createView(),
         ]);
-
     }
 }

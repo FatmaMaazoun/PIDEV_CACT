@@ -1,9 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CoutCategorieController!{% endblock %}
 
 {% block body %}
-Bon courage fatouma
+
+
+<!--Create categorie-->
+{{ render(controller('App\\Controller\\CoutCategorieController:create')) }}
+
+<!-- /Create ctaegorie-->
+ 
+
+<!-- /.row -->
+<div class="row fixed" style="margin-left:10%;margin-top:5%">
+    <div class="col-16">
+      <div class="card">
+        <div class="card-header">
+          <h3  >Liste de Catégories des tarifs</h3>
+
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-default">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 300px;width:900px;">
+          <table class="table table-head-fixed  table align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Libelle</th>
+                <th>Descritpion</th>
+                <th>editer</th>
+                <th>supprimer</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for cat in coutscat %}
+              <tr>
+                <td>{{cat.id}}</td>
+                <td>{{cat.libelle}} </td>
+                <td class="text-break">{{cat.description}}</td>
+                  <td><a href="{{path('Update_coutcategorie',{'id':cat.id})}}" class="nav-link" style="color:rgb(224, 110, 3);">
+                    <i class="nav-icon fas fa-edit"></i></a></td>
+                  <td><a href="{{path('delete_coutcategorie',{'id':cat.id})}}" class="nav-link " style="color:rgb(190, 18, 18);">
+                    <i class="nav-icon fas fa-trash"></i></a></td>
+               
+              </tr>
+              {% endfor %}
+             
+                
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+  
+   
+
+  
 
 {% endblock %}
 

@@ -9570,5 +9570,9 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
+<<<<<<< HEAD
+    "plugin-api-version": "2.1.0"
+=======
     "plugin-api-version": "2.2.0"
+>>>>>>> 1b6eab10dc9d1802cc8ba4c9853b0f337cdc259e
 }

@@ -29,7 +29,8 @@ class AvisController extends AbstractController
     {
         $avis = $this->getDoctrine()->getRepository(Avis::class)->findAll();
         return $this->render('avis/listeavis.html.twig', [
-            'avis' => $avis]);
+            'avis' => $avis
+        ]);
     }
 
 
@@ -58,7 +59,7 @@ class AvisController extends AbstractController
             $em->persist($avi);
             $em->flush();
             return $this->redirectToRoute('avis_affiche');
-           }
+        }
         return $this->render('avis/add.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -69,7 +70,7 @@ class AvisController extends AbstractController
      */
     public function update(Request $request): Response
     {
-        $avi=new Avis();
+        $avi = new Avis();
         $form = $this->createForm(AvisType::class, $avi);
         $form->handleRequest($request);
 
@@ -83,7 +84,6 @@ class AvisController extends AbstractController
         return $this->render('avis/update.html.twig', [
             'form' => $form->createView(),
         ]);
-
     }
     /**
      * @Route("/demande/evenement1", name="demande_evenement")
@@ -95,4 +95,3 @@ class AvisController extends AbstractController
         ]);
     }
 }
-

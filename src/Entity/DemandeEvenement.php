@@ -306,7 +306,8 @@ class DemandeEvenement
 
         return $this;
     }
-    public function __toString() {
+    public function __toString()
+    {
         return  $this->statut;
     }
 }

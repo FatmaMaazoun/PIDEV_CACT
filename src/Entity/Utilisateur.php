@@ -54,8 +54,7 @@ class Utilisateur
     /**
      * @ORM\Column(type="string", length=255)
      * * @Assert\NotBlank(message="Email est obligatoire")
-     * ** @Assert\Email(message = "The email '{{ value }}' est invalide
-    email.")
+     * ** @Assert\Email(message = "The email '{{ value }}' est invalide email.")
      */
     private $email;
 
@@ -195,27 +194,9 @@ class Utilisateur
         return $this->destinations;
     }
 
-    public function addDestination(Destination $destination): self
-    {
-        if (!$this->destinations->contains($destination)) {
-            $this->destinations[] = $destination;
-            $destination->setUtilisateur($this);
-        }
 
-        return $this;
-    }
 
-    public function removeDestination(Destination $destination): self
-    {
-        if ($this->destinations->removeElement($destination)) {
-            // set the owning side to null (unless already changed)
-            if ($destination->getUtilisateur() === $this) {
-                $destination->setUtilisateur(null);
-            }
-        }
 
-        return $this;
-    }
 
     /**
      * @return Collection<int, Avis>
@@ -276,7 +257,8 @@ class Utilisateur
 
         return $this;
     }
-    public function __toString() {
+    public function __toString()
+    {
         return  $this->login;
-}
+    }
 }

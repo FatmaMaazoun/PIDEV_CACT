@@ -31,28 +31,29 @@ class ProduitController extends AbstractController
     {
         $produit = $this->getDoctrine()->getRepository(Produit::class)->findAll();
         return $this->render('produit/listeproduit.html.twig', [
-            'produi' => $produit]);
+            'produi' => $produit
+        ]);
     }
 
     /**
      * @Route("/addprod", name="prod_add", methods={"GET", "POST"})
      */
     public function Add(Request $request): Response
-{
-    $produi = new Produit();
-    $em = $this->getDoctrine()->getManager();
-    $form = $this->createForm(ProduitType::class, $produi);
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $em->persist($produi);
-        $em->flush();
-        return $this->redirectToRoute('produit_affiche');
+    {
+        $produi = new Produit();
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(ProduitType::class, $produi);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($produi);
+            $em->flush();
+            return $this->redirectToRoute('produit_affiche');
+        }
+        return $this->render('produit/add.html.twig', [
+            'produi' => $produi,
+            'form' => $form->createView(),
+        ]);
     }
-    return $this->render('produit/add.html.twig', [
-        'produi' => $produi,
-        'form' => $form->createView(),
-    ]);
-}
 
     /**
      * @Route("/deleteprod/{id}", name="prod_delete",requirements={"id":"\d+"})
@@ -86,13 +87,5 @@ class ProduitController extends AbstractController
         return $this->render('produit/update.html.twig', [
             'form' => $form->createView(),
         ]);
-
     }
-
-
 }
-
-
-
-
-
