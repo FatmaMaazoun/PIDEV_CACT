@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\CoutEvenement;
 use App\Form\CoutEvenementType;
 use App\Repository\CoutEvenementRepository;
@@ -35,7 +36,7 @@ class CoutEvenementController extends AbstractController
 
 
 
-      /**
+    /**
      * @Route("/coutEvenement/add", name="addCoutEvenement")
      */
     public function addCoutEvenement(Request $request)
@@ -46,7 +47,7 @@ class CoutEvenementController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
-            
+
             $em->persist($CoutEvenement);
             $em->flush();
             return $this->redirectToRoute('AfficheCoutEvenement');
@@ -55,7 +56,7 @@ class CoutEvenementController extends AbstractController
     }
 
 
-      /**
+    /**
      * @Route("/coutEvenement/delete/{id}", name="deleteCoutEvenement")
      */
     public function deleteCoutEvenement($id)
@@ -66,7 +67,7 @@ class CoutEvenementController extends AbstractController
         $em->flush();
         return $this->redirectToRoute("AfficheCoutEvenement");
     }
- /**
+    /**
      * @Route("/coutEvenement/update/{id}", name="updateCoutEvenement")
      */
     public function updateCoutEvenement(Request $request, $id)
@@ -82,7 +83,4 @@ class CoutEvenementController extends AbstractController
         }
         return $this->render("cout_evenement/update.html.twig", array('form' => $form->createView()));
     }
-
-    
-    
 }

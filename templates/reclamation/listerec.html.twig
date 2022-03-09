@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+ {% block title %}
+     <h1> Liste des Reclamations </h1>
+ {% endblock %}
+
+ {% block body %}
+     <table border="1">
+         <tr>
+             <th scope="row">ID</th>
+             <th scope="row">Type</th>
+             <th scope="row">Description</th>
+             <th scope="row">Date Reclamation</th>
+
+
+         </tr>
+         {% for rec in reclamation %}
+             <tr>
+                 <td>{{ rec.id}} </td>
+                 <td>{{ rec.type}} </td>
+                 <td>{{ rec.description }}</td>
+                 <td>{{ rec.getDateRec()|date('d-m-y') }}</td>
+                 <td><a href="{{  path('updatereclamation',{id:rec.id})}}"> <button class="btn btn-secondary">Modifier</button></a> </td>
+                 <td><a href="{{  path('deletereclamation',{id:rec.id})}}" onclick="return confirm('Etes-vous sur de supprimer cette reclamation?');">
+                         <button class="btn btn-danger" >Supprimer</button> </a></td>
+             </tr>
+         {% endfor %}
+     </table>
+     <div style="margin-left:50px;"> <a class="btn-info" href="{{path('newreclamation')}}"> Ajouter une nouvelle Reclamation </a>
+     </div>
+
+ {% endblock %}

@@ -1,0 +1,17 @@
+{#
+<h1> update une Billet </h1>
+{{ form (form)}}
+#}
+{% extends 'base.html.twig' %}
+
+{#<h1>Ajout Article</h1>
+{{ form(form)}}#}
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
+    <a   href="{{ path('listbill') }}"> <button class="btn btn-danger">Go TO List </button> </a>
+
+
+{% endblock %}

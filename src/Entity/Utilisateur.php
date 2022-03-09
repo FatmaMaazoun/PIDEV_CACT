@@ -6,6 +6,7 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
@@ -26,11 +27,12 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
     private $role;
 
@@ -51,6 +53,8 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
+     * * @Assert\NotBlank(message="Email est obligatoire")
+     * ** @Assert\Email(message = "The email '{{ value }}' est invalide email.")
      */
     private $email;
 
@@ -190,27 +194,9 @@ class Utilisateur
         return $this->destinations;
     }
 
-    public function addDestination(Destination $destination): self
-    {
-        if (!$this->destinations->contains($destination)) {
-            $this->destinations[] = $destination;
-            $destination->setUtilisateur($this);
-        }
 
-        return $this;
-    }
 
-    public function removeDestination(Destination $destination): self
-    {
-        if ($this->destinations->removeElement($destination)) {
-            // set the owning side to null (unless already changed)
-            if ($destination->getUtilisateur() === $this) {
-                $destination->setUtilisateur(null);
-            }
-        }
 
-        return $this;
-    }
 
     /**
      * @return Collection<int, Avis>
@@ -270,5 +256,9 @@ class Utilisateur
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return  $this->login;
     }
 }

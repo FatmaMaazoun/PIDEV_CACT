@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <table border="1">
+        <tr>
+            <td>id</td>
+            <td>commentaire</td>
+            <td>note</td>
+            <td>demandeEvent</td>
+            <td>utilisateur</td>
+            <td>produits</td>
+        </tr>
+        {% for avi in avis %}
+            <tr>
+                <td>{{ avi.id }}</td>
+                <td>{{ avi.commentaire }}</td>
+                <td>{{ avi.note }}</td>
+                <td>{{ avi.demandeEvent.getStatut()}}</td>
+                <td>{{ avi.utilisateur.getNom()}}</td>
+                <td><a href="{{  path('prod_delete',{id:avi.id})}}" onclick="return confirm('Etes-vous sur de supprimer ce produit?');">
+                        <button class="btn btn-danger" >Supprimer</button> </a></td>
+                <td><a href="{{  path('prod_update',{id:avi.id})}}" >
+                        <button class="btn btn-danger" >Modifier</button> </a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <td><a href="{{ path('avis_add')}}" >
+            <button class="btn btn-danger" >Ajouter</button> </a></td>
+{% endblock %}
