@@ -1,4 +1,119 @@
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_errors(form) }}
-{{ form_end(form) }}
+{% block stylesheets %}
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{{ asset ('plugins/fontawesome-free/css/all.min.css')}}">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="{{ asset ('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{{ asset ('dist/css/adminlte.min.css')}}">
+{% endblock %}
+
+{% block javascripts %}
+<!-- jQuery -->
+<script src="{{ asset ('plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset ('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ asset ('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset ('dist/js/adminlte.min.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset ('dist/js/demo.js')}}"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+{% endblock %}
+
+{{ form_start(form,{'action': path('addCoutEvenement',{'id':id})} ) }}
+
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+  <h4 class="modal-title">Ajouter cout Evénement</h4>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+   <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="modal-body">
+
+
+
+<div class="form-row">
+<div class="form-group col-md-4">
+            {{ form_row(form.coutcategorie) }}
+          </div>
+          <div class="form-group col-md-4">
+            {{ form_row(form.NbBillet ) }}
+          </div>
+          <div class="form-group col-md-4">
+            {{ form_row(form.prix ) }}
+          </div>
+         <div class="form-group">
+
+  {{ form_widget(form.demandeEvent,{ 'attr' : { 'style':'display:none'}}) }}
+</div>
+<div class="  modal-footer justify-content-betwwen">
+  <button method="POST" name="clicked"  value="Ajouter"  class="waves-effect waves-light btn-small" style="background: #00cf67">Ajouter</button>
+</div>
+
+  <div class="form-row">
+          <div class="form-group col-md-4">
+      {{ form_errors(form) }}
+          </div>
+</div>
+  <div class="form-row">
+          <div class="form-group col-md-4">
+        {{ form_end(form) }}
+          </div>
+
+</div>
+</div>
+<div class=" my-2 my-sm-0" >
+                  <div class="input-group input-group-sm " style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control   " placeholder="Search"  placeholder="Search">
+                    <div class="input-group-append">
+                      <button  class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+           
+  <div class="card-body">
+<table id="example1" class="table table-bordered table-striped">
+
+<thead>
+
+<tr>
+<th>Categorie</th>
+<th>nombre des billets</th>
+<th>Prix</th>
+<th>Delete</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+{% for lce in listCoutEvenement %}
+<td>{{lce.getCoutcategorie().getLibelle()}}</td>
+<td>{{lce.getNbBillet()}}</td>
+<td>{{lce.getPrix()}}</td>
+<!-- -->
+
+  <td> <a href="{{ path('deleteCoutEvenement',{'id':lce.id}) }}" class="nav-link " style="color:rgb(190, 18, 18);">
+                    <i class="nav-icon fas fa-trash"></i></a></td>
+  
+</tr>
+ 
+{%endfor%}
+
+</tbody>
+<tfoot>
+</tfoot>
+</table>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+

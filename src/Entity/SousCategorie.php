@@ -56,6 +56,10 @@ class SousCategorie
      */
     private $destinations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=CouleurEvenement::class, inversedBy="sousCategories")
+     */
+    private $CouleurEvenement;
 
     public function __construct()
     {
@@ -129,6 +133,18 @@ class SousCategorie
                 $destination->setSouscategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCouleurEvenement(): ?CouleurEvenement
+    {
+        return $this->CouleurEvenement;
+    }
+
+    public function setCouleurEvenement(?CouleurEvenement $CouleurEvenement): self
+    {
+        $this->CouleurEvenement = $CouleurEvenement;
 
         return $this;
     }

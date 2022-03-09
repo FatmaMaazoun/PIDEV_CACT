@@ -275,26 +275,135 @@
                           
                         </ul>
                       </li>
+
+        
                       <li class="nav-item">
                         <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-chart-pie"></i>
                           <p>
-                            Gestion des évenements 
+                            Evenement
                             <i class="right fas fa-angle-left"></i>
                           </p>
                         </a>
                         <ul class="nav nav-treeview">
-                          
+                          <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-chart-pie"></i>
+                          <p>
+                           Gestion des Demande
+                            <i class="right fas fa-angle-left"></i>
+                          </p>
+                        </a>
+                        <ul class="nav nav-treeview">
                     
                           <li class="nav-item">
                          
-<a href="{{ path('addDemandeEvenement')}}" class="nav-link">
-<i class="nav-icon fas fa-file"></i>
+                         <a href="{{ path('addDemandeEvenement1')}}" class="nav-link">
+                         <i class="nav-icon fas fa-file"></i>
 <p>Créer demande d'evenement</p>
 </a>
 </li>
+               <li class="nav-item">
+<a href="{{ path('DemandeEvenementEnAttente')}}" class="nav-link">
+                         
+<i class="nav-icon fas fa-file"></i>
+<p>Demande en attante</p>
+</a>
+</li>
+
+      <li class="nav-item">
+                         
+<a href="{{ path('DemandeEvenementAccepter')}}" class="nav-link">
+<i class="nav-icon fas fa-file"></i>
+<p>Demande accepter</p>
+</a>
+</li>
+   <li class="nav-item">
+                         
+<a href="{{ path('DemandeEvenementRefuser')}}" class="nav-link">
+<i class="nav-icon fas fa-file"></i>
+<p>Demande réfuser</p>
+</a>
+</li>
+</lu>
+
+
+</ul>
+<li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-chart-pie"></i>
+                          <p>
+                           Gestion des Evenements
+                            <i class="right fas fa-angle-left"></i>
+                          </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+      
+
                         </ul>
                       </li>
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                       <li class="nav-item">
                         <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-tree"></i>
@@ -314,6 +423,10 @@
                           </li>
                         </ul>
                       </li>
+
+
+
+
                       <li class="nav-item">
                         <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-edit"></i>
@@ -376,7 +489,7 @@
                 <section class="content-header">
                   <div class="container-fluid">
                     <div class="row mb-2">
-                      <div class="col-sm-6">
+                      <div class="col-sm-12">
                         {% block body %}
 
 

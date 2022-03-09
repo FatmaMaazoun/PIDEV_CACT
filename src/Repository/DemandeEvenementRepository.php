@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\DemandeEvenement;
+use App\service\Date;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +48,41 @@ class DemandeEvenementRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+
+    public function listDemandeEvenementEnAttente(){
+        return $this->createQueryBuilder('d')
+            ->where('d.statut LIKE ?1')
+            ->setParameter('1', '%en attente%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function listDemandeEvenementRefuser(){
+        return $this->createQueryBuilder('d')
+            ->where('d.statut LIKE ?1')
+            ->setParameter('1', '%Refuser%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function listDemandeEvenementAccepter(){
+        return $this->createQueryBuilder('d')
+            ->where('d.statut LIKE ?1')
+            ->setParameter('1', '%Accepter%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function listEvenementAccepterDateDans2Semaine(){
+        return $this->createQueryBuilder('d')
+            ->where('d.statut LIKE ?1')
+            ->andWhere('d.date_debutEvent <= :date_start')
+            ->andWhere('d.date_finEvent >= :date_end')
+            ->setParameter('1', '%Accepter%')
+            ->setParameter('date_start', $date->modify('-15 day')->format('Y-m-d 00:00:00'))
+            ->setParameter('date_finEvent', $date->format('Y-m-d 00:00:00'))
+            ->getQuery()
+            ->getResult();
+    }
 }

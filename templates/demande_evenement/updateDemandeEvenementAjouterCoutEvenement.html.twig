@@ -1,0 +1,96 @@
+
+{% extends 'base.html.twig' %}
+
+
+
+
+{% block body %}
+ 
+				
+<h3>Ajouter une demande D'évenement</h3>
+
+  
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+<div class="form-row">
+          <div class="form-group col-3">
+            {{ form_row(form.destination ) }}
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.utilisateur ) }}
+          </div>
+
+          
+          <div class="form-group col-4">
+            {{ form_row(form.date_demande,{'label': 'Date Demande'}) }}
+</div> 
+</div>
+            
+
+<div class="form-row">
+ <div class="form-group col-5">
+            {{ form_row(form.description_demande ) }}
+            </div>
+    <div class="form-group col-5">
+          
+                {{ form_row(form.libelleEvenement,{'label': 'Evenement'} ) }}
+            </div>
+
+<div class="form-row">
+          <div class="form-group col-6">
+            {{ form_row(form.date_debutEvent,{'label': 'Date Debut Evenement'} ) }}
+          </div>
+          <div class="form-group col-6">
+                      {{ form_row(form.heure_debutEvent,{'label': 'Heure Date Evenement'} ) }}
+
+
+          </div>
+           
+            </div>
+            <div class="form-row">
+          <div class="form-group col-5">
+                      {{ form_row(form.date_finEvent,{'label': 'Date Fin Evenement'} ) }}
+
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.heure_finEvent,{'label': 'Heure Fin Evenement'}  ) }}
+
+          </div>
+           
+            </div>
+  <div class="form-row">
+          <div class="form-group col-5">
+            {{ form_row(form.description_event ,{'label': 'Discription Evenement'}  ) }}
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.capacite) }}
+
+          </div>
+           
+            </div>
+             <div class="form-row">
+          <div class="form-group col-md-5">
+            {{ form_row(form.image ) }}
+          </div>
+            </div>
+
+
+<div class="form-group">
+
+  {{ form_widget(form.statut,{ 'attr' : { 'style':'display:none'}}) }}
+</div>
+ 
+
+
+ 
+  {{ form_errors(form) }}
+{{ form_end(form) }}
+       <!--Afficher CoutEvenement-->
+    <button type="button"class="btn btn-block btn-secondary " data-toggle="modal" data-target="#modal-default" style="margin-left:690px;width:250px">
+    liste des couts évenements 
+</button>
+<!--Ajouter CoutEvenement-->
+  {{ render(controller('App\\Controller\\CoutEvenementController:addCoutEvenement',{'id':DemandeEvenement} )) }}
+<!-- /Ajouter CoutEvenement-->
+
+ {% endblock %}
+ 

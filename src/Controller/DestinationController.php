@@ -62,6 +62,17 @@ class DestinationController extends Controller
     }
 
 
+
+     /**
+     * @Route("/index1", name="destination")
+     */
+    public function index1(): Response
+    {
+        return $this->render('bodyHome.html.twig', [
+            'controller_name' => 'DestinationController',
+        ]);
+    }
+
     /**
      * @Route("/Destination/ajouter", name="create_destination")
      */

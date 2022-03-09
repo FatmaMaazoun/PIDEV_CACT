@@ -1,1 +1,45 @@
-{{ form(form) }}
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<h3 >Modifier Cout Evenement</h3>
+
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+<div class="form-row">
+          
+          <div class="form-group col-md-12">
+            {{ form_row(form.demandeEvent ) }}
+
+          </div>
+
+
+<div class="form-row">
+<div class="form-group col-md-4">
+            {{ form_row(form.coutcategorie) }}
+          </div>
+          <div class="form-group col-md-4">
+            {{ form_row(form.NbBillet ) }}
+          </div>
+          <div class="form-group col-md-4">
+            {{ form_row(form.prix ) }}
+
+          </div>
+          <div class="form-row">
+          <div class="form-group col-md-4">
+          {{ form_widget(form) }}
+          </div>
+
+  <div class="form-row">
+          <div class="form-group col-md-4">
+      {{ form_errors(form) }}
+          </div>
+
+  <div class="form-row">
+          <div class="form-group col-md-4">
+        {{ form_end(form) }}
+          </div>
+
+</div>
+</div>
+{% endblock %}

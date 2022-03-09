@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+ 
+
+
+  
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+<div class="form-row">
+          <div class="form-group col-3">
+            {{ form_row(form.destination ) }}
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.utilisateur ) }}
+          </div>
+
+          
+          <div class="form-group col-4">
+            {{ form_row(form.date_demande,{'label': 'Date Demande'}) }}
+</div> 
+</div>
+            
+
+<div class="form-row">
+ <div class="form-group col-5">
+            {{ form_row(form.description_demande ) }}
+            </div>
+    <div class="form-group col-5">
+          
+                {{ form_row(form.libelleEvenement,{'label': 'Evenement'} ) }}
+            </div>
+
+<div class="form-row">
+          <div class="form-group col-6">
+            {{ form_row(form.date_debutEvent,{'label': 'Date Debut Evenement'} ) }}
+          </div>
+          <div class="form-group col-6">
+                      {{ form_row(form.heure_debutEvent,{'label': 'Heure Date Evenement'} ) }}
+
+
+          </div>
+           
+            </div>
+            <div class="form-row">
+          <div class="form-group col-5">
+                      {{ form_row(form.date_finEvent,{'label': 'Date Fin Evenement'} ) }}
+
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.heure_finEvent,{'label': 'Heure Fin Evenement'}  ) }}
+
+          </div>
+           
+            </div>
+  <div class="form-row">
+          <div class="form-group col-5">
+            {{ form_row(form.description_event ,{'label': 'Discription Evenement'}  ) }}
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.capacite) }}
+
+          </div>
+           
+            </div>
+             <div class="form-row">
+          <div class="form-group col-md-5">
+            {{ form_row(form.image ) }}
+          </div>
+            </div>
+
+
+<div class="form-group">
+
+  {{ form_widget(form.statut,{ 'attr' : { 'style':'display:none'}}) }}
+</div>
+ 
+ 
+ 
+
+
+<div class="  modal-footer justify-content-betwwen">
+  <button method="POST" name="clicked"  value="Refuser"  class="waves-effect waves-light btn-small" style="background: #00cf67">Retner</button>
+ 
+ 
+<ion-icon name="return-up-back-outline"></ion-icon>
+
+
+
+</div>
+  {{ form_errors(form) }}
+{{ form_end(form) }}
+           
+{% endblock %}
