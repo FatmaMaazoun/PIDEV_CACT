@@ -1,0 +1,53 @@
+{% extends 'base.html.twig '%}
+{% block body %}
+
+<div class="row fixed" style="margin-left:3%">
+    <div class="col-16">
+      <div class="card">
+        <div class="card-header">
+          <h3>Statistiques</h3>
+          <div>
+            <h2>Destination par sous catégories</h2>
+            <canvas id="myChart"></canvas>
+          </div>
+          <div>
+          </div>
+         
+          </div>
+          </div>
+          </div>
+          </div>
+
+
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
+          <script>
+ 
+        const labels = [];
+      
+        const data = {
+          labels: {{ label|raw }} ,
+          datasets: [{
+            label: 'Destination par Sous Catégories',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data:{{ data|raw }} ,
+          }]
+        };
+      
+        const config = {
+            type: 'doughnut',
+            data: data,
+        };
+      </script>
+      <script>
+        const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+      </script>
+
+      
+
+
+{% endblock %}

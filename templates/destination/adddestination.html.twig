@@ -30,9 +30,10 @@
 {% endblock %}
 
 {% block body %}
-{{ form_start(form, {'action': path('create_delegation')})}}
-<div class="content" style="width:900px;height: 900px;margin-left:30px;margin-top:5%">
-  <div class="card ">
+  {{ form_start(form,{'attr': {'novalidate':'novalidate'}} ) }}
+
+<div class="content" style="width:900px;height:500px;margin-left:30px">
+  <div class="card card-secondary">
   <div class="card-header">
   <h3 class="card-title">Ajouter une Destination</h3>
  
@@ -67,7 +68,6 @@
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputEmail4">Adresse</label>
               {{ form_row(form.adresse , {attr: {class: 'form-control',placeholder: '14,rue,aghle tamimi'}}) }}
 
             </div>
@@ -92,7 +92,8 @@
       </div>
     
       <div class="modal-footer justify-content-between">
-       
+        <a type="button" href="{{path('read_destination')}}" class="btn btn-secondary ">Retour</a>
+
         {{ form_row(form.save , {attr: {class: 'btn btn-primary'}}) }}
 
       </div>

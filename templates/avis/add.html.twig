@@ -1,16 +1,38 @@
-{% extends 'base.html.twig' %}
+{% extends 'bodyHome.html.twig' %}
 
 {% block title %}Nouvel Avis{% endblock %}
+
 
 {% block body %}
     <h1>Créer nouvel Avis</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
     {{ form_widget(form) }}
+    <div class="form-group">
+
+        {{ form_row(form.note) }}
+
+    </div>
+
     <button type="submit" class="btn btn-success">Créer</button>
+    <a type="button" href="{{ path('avis_affiche') }}" class="btn btn-primary">Retour</a>
     {{ form_errors(form) }}
     {{ form_end(form) }}
+<html>
+<head>
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+</head>
+    <body>
 
-
-
+    <div class="stars">
+        <i class="lar la-star" data-value="1"></i>
+        <i class="lar la-star" data-value="2"></i>
+        <i class="lar la-star" data-value="3"></i>
+        <i class="lar la-star" data-value="4"></i>
+        <i class="lar la-star" data-value="5"></i>
+    </div>
+    <input type="text" name="note" id="note" value="0">
+    <script src="star.js"></script>
+    </body>
+</html>
 {% endblock %}

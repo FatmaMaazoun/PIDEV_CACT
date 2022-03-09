@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Entity\SousCategorie;
 use App\Form\CategorieType;
+use Doctrine\ORM\EntityManagerInterface;
 use SebastianBergmann\Environment\Console;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Flex\Response as FlexResponse;
 
 class CategorieController extends AbstractController
@@ -103,5 +107,61 @@ class CategorieController extends AbstractController
                 ['form' => $form->createView()]
             );
         }
+    }
+
+
+
+
+    /**
+     * @Route("/categorie_front", name="read_categorie")
+     */
+    public function Read_front(): Response
+    {
+        $liste_categorie = $this->getDoctrine()->getRepository(Categorie::class)
+            ->findAll();
+        return $this->render('categorie/index.html.twig', [
+            'controller_name' => 'CategorieController',
+            'liste_categorie' => $liste_categorie
+
+        ]);
+    }
+
+    /**
+     * @Route("/categorie_mobile", name="mobile_read")
+     */
+    public function getCategorie(NormalizerInterface $Normalizer)
+    {
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+        $json = $Normalizer->normalize($categories, 'json', ['groups' => 'categorie']);
+
+        return new Response(json_encode($json));
+    }
+
+    /**
+     * @Route("/addcategorie_mobile", name="mobile_create")
+     */
+    public function addCategorie(Request $request): Response
+    {
+        $entitymanager = $this->getDoctrine()->getManager();
+        //$categoryRepository=$entitymanager->getRepository(Categorie::class);
+        $category = new Categorie();
+        $category->setLibelle($request->query->get('libelle'));
+        $category->setDescription($request->query->get('description'));
+        $entitymanager->persist($category);
+        $entitymanager->flush();
+        return new Response('categorie added successfully');
+    }
+
+    /**
+     * @Route("/souscategories/{id}", name="showsouscategorie")
+     */
+    public function souscategories($id)
+    {
+        $categorie = $this->getDoctrine()->getRepository(Categorie::class)->find($id);
+        $souscat = $this->getDoctrine()->getRepository(SousCategorie::class)->findBy(array('categorie' => $categorie->getId()));
+
+        return $this->render('categorie/showsouscategorie.html.twig', [
+            "souscat" => $souscat,
+        ]);
     }
 }
