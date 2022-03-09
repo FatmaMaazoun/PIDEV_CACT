@@ -23,33 +23,6 @@ class DelegationController extends AbstractController
     }
 
     /**
-     * @Route("/delegation/ajouter", name="create_delegation")
-     */
-    public function create(Request $request): Response
-    {
-        //$foo = $request->get('libelle');
-
-        $Delegation = new Delegation();
-        $form = $this->createForm(DelegationType::class, $Delegation);
-        $form->add('save', SubmitType::class, ['label' => 'Enregistrer']);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($Delegation);
-            $em->flush();
-
-
-            return $this->redirectToRoute('read_delegation');
-        } else {
-            return $this->render('delegation/adddelegation.html.twig', [
-                'form' => $form->createView()
-            ]);
-        }
-    }
-
-    /**
      * @Route("/delegation", name="read_delegation")
      */
     public function Read(): Response
@@ -61,6 +34,33 @@ class DelegationController extends AbstractController
             'liste_delegations' => $liste_delegations
 
         ]);
+    }
+
+
+    /**
+     * @Route("/delejouter", name="create_del")
+     */
+    public function create(Request $request): Response
+    {
+
+        $del = new Delegation();
+        $form = $this->createForm(DelegationType::class, $del);
+        $form->add('save', SubmitType::class, ['label' => 'Enregistrer']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($del);
+            $em->flush();
+
+
+            return $this->redirectToRoute('read_delegation');
+        } else {
+            return $this->render('delegation/adddelegation.html.twig', [
+                'form' => $form->createView()
+            ]);
+        }
     }
 
     /**

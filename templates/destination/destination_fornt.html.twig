@@ -1,0 +1,123 @@
+{% extends 'front_destination.html.twig' %}
+
+{% block body %}
+    <!--Filtre-->
+    <div style="margin-top:200px">
+      <div class="container">
+     
+        <div class="row">
+      
+       
+          
+            <div class="col-md-12">
+                <div class="single-travel-boxes">
+                  <a type="button" href="{{path('destination')}}"  style="margin-top:12px;margin-left:12px  ">
+                    <h4><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                    </svg></h4>
+                  </a>
+                  
+                    <div id="desc-tabs" class="desc-tabs">
+                      
+                        <ul class="nav nav-tabs" role="tablist" style="margin-left:400;margin-top:10px;;margin-bottom:10px">
+                          
+                            {% set id = null %}
+                              {% for i in souscat %}
+                              {% set id = i.id %}
+                            <li class="active">
+                                 <a href="{{path('destination_essai',{'id':i.id})}}" >
+                                    
+                                     <i class="fa fa-tree"></i>
+                                     {{i.libelle}}
+                                 </a>
+                            </li>
+                            {% endfor %}
+                            
+                           
+                        </ul>
+                        
+
+              
+               </div>
+{% block filtre  %}
+               <div  style="margin-left:50px;margin-top:20px">
+
+                <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  <h4><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
+                    <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                  </svg>Filtrer</h4>
+                </button>
+            </div>
+               {% include 'destination/recherche.html.twig'%}
+               {% endblock %}
+              {% block destinations %}
+              <section style="margin-left:10px">
+              
+                <div class="packages-content">
+                  <div class="row">
+                    {% for des in liste_destination  %}
+                    {% if des.id == 3 %}
+                    {% else %}
+        
+                    <div class="col-md-4 col-sm-6">
+                      <div class="single-package-item">
+                        <img src="{{ asset ('upload/image/'~ des.image)}}" alt="blog-img"  style="height:200px;width:200px;margin-left: 75px;">
+                        <div class="single-package-item-txt">
+                          <h3>{{des.nom}} <span class="pull-right">                                        {{ render(controller('App\\Controller\\DestinationController:couts',  { 'id': des.id })) }}
+                          </span></h3>
+                          <div style="margin-top:8px">{{des.description}} </div>
+                            
+                          <p>
+                                           
+                            {{des.description}}
+                        </p>
+                      
+                       <br/>
+                        <p><b>Adresse </b> <br/>
+                       {{des.adresse}}, {{    des.delegation.nom}}  {{des.delegation.gouvernorat.nom}}</p>
+                       <br/>
+                       <p><b>Contact</b></p>
+
+                    
+                
+                    <div class="row">
+                      <div class="col-sm-2">
+                       <p>{{des.email}}</p>
+                      </div>
+                      <div class="col-sm-2">
+                       <p style="margin-left:160px">{{des.numTel}}</p> 
+                        </div>
+                        </div>
+                        
+                    
+                        
+                        </div><!--/.single-package-item-txt-->
+                      </div><!--/.single-package-item-->
+        
+        
+                    </div><!--/.col-->
+                    {% endif %}
+                    {% endfor %}
+
+                  </div><!--/.row-->
+                </div><!--/.packages-content-->
+                <div style="margin-left:400px">{{knp_pagination_render(liste_destination)}}</div>
+
+              </div><!--/.container-->
+        
+            </section><!--/.packages-->
+
+         
+            <!--packages end-->
+{% endblock %}
+
+
+{% endblock %}
+
+
+              
+          
+          
+           
+            
+

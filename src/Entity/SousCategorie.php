@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Repository\SousCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,17 +23,31 @@ class SousCategorie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 15,
+     *      minMessage = " la libelle doit avoir au minimum  {{ limit }} caractéres ",
+     *      maxMessage = " la libelle doit avoir au maximum {{ limit }} caractéres"
+     * )
      */
     private $libelle;
 
+
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 300,
+     *      minMessage = " la description doit avoir au minimum  {{ limit }} caractéres ",
+     *      maxMessage = " la description doit avoir au maximum {{ limit }} caractéres"
+     * )
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="sousCategories")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $categorie;
 
@@ -39,6 +55,7 @@ class SousCategorie
      * @ORM\OneToMany(targetEntity=Destination::class, mappedBy="souscategorie", orphanRemoval=true)
      */
     private $destinations;
+
 
     public function __construct()
     {
