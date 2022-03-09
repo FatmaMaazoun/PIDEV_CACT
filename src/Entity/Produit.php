@@ -8,9 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+Use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProduitRepository::class)
@@ -21,17 +20,22 @@ class Produit
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("produit")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="description est obligatoire")
+     * @Groups("produit")
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=Avis::class, inversedBy="produits")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="avis est obligatoire")
+     * @Groups("produit")
      */
     private $avis;
 

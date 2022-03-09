@@ -8,6 +8,7 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <button type="submit" class="btn btn-success">Modifier</button>
+    <a type="button" href="{{ path('avis_affiche') }}" class="btn btn-primary">Retour</a>
     {{ form_errors(form) }}
     {{ form_end(form) }}
 {% endblock %}
