@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\EntityManagerInterface;
+use Snipe\BanBuilder\CensorWords;
 
 class AvisController extends AbstractController
 {
@@ -23,7 +24,7 @@ class AvisController extends AbstractController
     }
 
     /**
-     * @Route("/avi/Affiche", name="avis_affiche", methods={"GET"})
+     * @Route("/avi/Affiche", name="avis_affiche")
      */
     public function Affiche()
     {
@@ -35,15 +36,15 @@ class AvisController extends AbstractController
 
 
     /**
-     * @Route("/delete", name="avis_delete", methods={"POST"})
+     * @Route("/deleteavis/{id}", name="avis_delete")
      */
-    public function delete(Request $request, $id, Avis $avis): Response
+    public function delete($id, Avis $avis): Response
     {
         $avis = $this->getDoctrine()->getRepository(Avis::class)->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($avis);
         $em->flush();
-        return $this->redirectToRoute('avis_listeavis');
+        return $this->redirectToRoute('avis_affiche');
     }
 
     /**
@@ -56,6 +57,12 @@ class AvisController extends AbstractController
         $form = $this->createForm(AvisType::class, $avi);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $censor = new CensorWords;
+            $langs = array('fr','it','en-us','en-uk','de','es');
+            $badwords = $censor->setDictionary($langs);
+            $censor->setReplaceChar("*");
+            $string = $censor->censorString($avi->getCommentaire());
+            $avi->setCommentaire($string['clean']);
             $em->persist($avi);
             $em->flush();
             return $this->redirectToRoute('avis_affiche');
@@ -66,9 +73,9 @@ class AvisController extends AbstractController
     }
 
     /**
-     * @Route("/update", name="avis_update", methods={"GET", "POST"})
+     * @Route("/avis/update/{id}", name="avis_update")
      */
-    public function update(Request $request): Response
+    public function update(Request $request, $id)
     {
         $avi = new Avis();
         $form = $this->createForm(AvisType::class, $avi);
@@ -85,13 +92,7 @@ class AvisController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    /**
-     * @Route("/demande/evenement1", name="demande_evenement")
-     */
-    public function index1(): Response
-    {
-        return $this->render('front.html.twig', [
-            'controller_name' => 'DemandeEvenementController',
-        ]);
-    }
+
+
+
 }

@@ -5,7 +5,9 @@ namespace App\Entity;
 use App\Repository\DemandeEvenementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DemandeEvenementRepository::class)
@@ -16,57 +18,74 @@ class DemandeEvenement
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("demandeEvenement")
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("demandeEvenement")
      */
     private $date_demande;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("demandeEvenement")
      */
     private $statut;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="30",maxMessage="votre description doit contenir au maximun 30 caracteres")
+     * @Assert\NotBlank(message="le champ description de demande est obligatoire")
+     * @Groups("demandeEvenement")
      */
     private $description_demande;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("demandeEvenement")
+     * 
      */
     private $date_debutEvent;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("demandeEvenement")
      */
     private $date_finEvent;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups("demandeEvenement")
      */
     private $heure_debutEvent;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups("demandeEvenement")
      */
     private $heure_finEvent;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="30",maxMessage="votre description doit contenir au maximun 30 caracteres")
+     * @Assert\NotBlank(message="le champ description d'evenement est obligatoire")
+     * @Groups("demandeEvenement")
      */
     private $description_event;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(message="le champ description d'evenement est obligatoire")
+     * @Groups("demandeEvenement")
      */
     private $capacite;
 
     /**
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="demandeEvenements")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("demandeEvenement")
      */
     private $destination;
 
@@ -84,6 +103,28 @@ class DemandeEvenement
      * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="demandeEvent", orphanRemoval=true)
      */
     private $reservations;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="le champ nom de l'evenement est obligatoire")
+     */
+    private $libelleEvenement;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+      * @Assert\NotBlank(message="l'image est obligatoire")
+      *@Groups("demandeEvenement")
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="demandeEvenements")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups("demandeEvenement")
+     */
+    private $utilisateur;
+
+   
 
     public function __construct()
     {
@@ -310,4 +351,41 @@ class DemandeEvenement
     {
         return  $this->statut;
     }
+
+    public function getLibelleEvenement(): ?string
+    {
+        return $this->libelleEvenement;
+    }
+
+    public function setLibelleEvenement(string $libelleEvenement): self
+    {
+        $this->libelleEvenement = $libelleEvenement;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
 }

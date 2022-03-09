@@ -1,16 +1,42 @@
-{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{{ asset ('plugins/fontawesome-free/css/all.min.css')}}">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="{{ asset ('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{{ asset ('dist/css/adminlte.min.css')}}">
+{% endblock %}
 
-{% block title %}Hello DemandeEvenementController!{% endblock %}
+{% block javascripts %}
+<!-- jQuery -->
+<script src="{{ asset ('plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset ('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ asset ('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset ('dist/js/adminlte.min.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset ('dist/js/demo.js')}}"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-{% block body %}
-<section class="content">
-    <div class="container-fluid">
-      <div class="row ">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <div class="form-inline justify-content-between">
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+
+<div class="card-body">
   
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+  <h4 class="modal-title">Listes de cout evenement</h4>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+   <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="modal-body">
                 <div class=" my-2 my-sm-0" >
                   <div class="input-group input-group-sm " style="width: 150px;">
                     <input type="text" name="table_search" class="form-control   " placeholder="Search"  placeholder="Search">
@@ -19,9 +45,6 @@
                     </div>
                   </div>
                 </div>
-  
-              </div>
-            </div>
            
   <div class="card-body">
 <table id="example1" class="table table-bordered table-striped">
@@ -29,24 +52,26 @@
 <thead>
 
 <tr>
-<th>Origine</th>
-<th>Distination</th>
-<th>Date Demande</th>
-<th>Description demande</th>
-<th>Evenement</th>
+
+<th>Categorie</th>
+<th>Nombre Des Billets</th>
+<th>Prix</th>
+<!--   <th>Delete</th>
+<th>Update</th>-->
 </tr>
 </thead>
 <tbody>
 <tr>
 {% for lce in listCoutEvenement  %}
-<td>{{lce.getDemandeEvent().getStatut()}}</td>
 <td>{{lce.getCoutcategorie().getLibelle()}}</td>
 <td>{{lce.getNbBillet()}}</td>
 <td>{{lce.getPrix()}}</td>
-<!-- -->
+<!-- 
 
-  <td> <a href="{{ path('deleteCoutEvenement',{'id':lce.id}) }}">Delete</a></td>
-  <td><a href="{{ path('updateCoutEvenement',{'id':lce.id}) }}">Update</a></td>
+  <td> <a href="{{ path('deleteCoutEvenement',{'id':lce.id}) }}" class="nav-link " style="color:rgb(190, 18, 18);">
+                    <i class="nav-icon fas fa-trash"></i></a></td>
+  <td><a href="{{ path('updateCoutEvenement',{'id':lce.id}) }}" class="nav-link" style="color:rgb(224, 110, 3);">
+                    <i class="nav-icon fas fa-edit"></i></a></td>-->
 </tr>
  
 {%endfor%}
@@ -67,10 +92,7 @@
 
 </section>
   
-  <div >
- <pagination-controls id= 'DBPagination'  (pageChange)="currentPg = $event"></pagination-controls>
  
- </div>
 </div>
 
 
@@ -78,32 +100,5 @@
 
 
 
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
-{% endblock %}
-{% block bootStrap %}
-	<link rel="stylesheet" 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-	<script 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-	                $(document).ready(function(){
-	                               $("#monModal").modal('show');
-	                });
-	</script>
-{% endblock %}
+
+

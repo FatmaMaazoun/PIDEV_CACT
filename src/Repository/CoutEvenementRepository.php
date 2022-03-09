@@ -3,9 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\CoutEvenement;
+use App\Form\CoutEvenementType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
-
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormInterface;
 /**
  * @method CoutEvenement|null find($id, $lockMode = null, $lockVersion = null)
  * @method CoutEvenement|null findOneBy(array $criteria, array $orderBy = null)
@@ -47,4 +51,54 @@ class CoutEvenementRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+/**
+ * Allow to add a new Country.
+ *
+ * @param Request $request
+ *
+ * @return \Symfony\Component\Form\FormInterface
+ */
+public function addCountry(Request $request)
+{
+    $CoutEvenement=new CoutEvenement();
+ 
+    $form = $this->form->create(CoutEvenementType::class, $CoutEvenement);
+    $form->handleRequest($request);
+ 
+    if ($form->isSubmitted() && $form->isValid()) {
+        $this->doctrine->persist($CoutEvenement);
+        $this->doctrine->flush();
+        $this->session->getFlashBag()->add('success', 'Le pays a bien été enregistré.');
+    }
+ 
+    return $form;
+}
+public function ListeCoutEvenementByDemanedeEvenement(Request $request)
+{
+    $CoutEvenement=new CoutEvenement();
+ 
+    $form = $this->form->create(CoutEvenementType::class, $CoutEvenement);
+    $form->handleRequest($request);
+ 
+    if ($form->isSubmitted() && $form->isValid()) {
+        $this->doctrine->persist($CoutEvenement);
+        $this->doctrine->flush();
+        $this->session->getFlashBag()->add('success', 'Le pays a bien été enregistré.');
+    }
+    return $form;
+}
+public function listCoutEvenementByIdDemandeEvenement($id)
+{
+    return $this->createQueryBuilder('d')
+        ->join('d.demandeEvent', 'c')
+        ->addSelect('c')
+        ->where('c.id=:id')
+        ->setParameter('id',$id)
+        ->getQuery()
+        ->getResult();
+}
+
+
 }

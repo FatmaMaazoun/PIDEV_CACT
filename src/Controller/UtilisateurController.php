@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,6 +34,7 @@ class UtilisateurController extends AbstractController
         $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findAll();
         return $this->render('utilisateur/list.html.twig', ["utilisateurs" => $user]);
     }
+    
 
     /**
      * @Route("/addutilisateur",name="addutilisateurs")
@@ -89,4 +92,25 @@ class UtilisateurController extends AbstractController
             'controller_name' => 'DemandeEvenementController',
         ]);
     }
+
+
+
+
+
+
+     /**
+     * @Route("/get/listutilisateurs",name="getlistutilisateurs")
+     */
+    public function getlistUtilisateurs(UtilisateurRepository $repo,SerializerInterface $serializerInterface)
+    {
+        $user = $repo->findAll();
+        //dump($user);
+        $json=$serializerInterface->serialize($user,'json',['groups'=>'utilisateur']);
+      
+       return new Response(json_encode($json));
+  
+        
+       
+    }
+
 }

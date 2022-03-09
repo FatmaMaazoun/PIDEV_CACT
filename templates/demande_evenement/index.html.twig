@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DemandeEvenementController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
+<!--Create categorie-->
+{{ render(controller('App\\Controller\\CoutEvenementController:addCoutEvenement')) }}
+
+<!-- /Create ctaegorie-->
 <section class="content">
     <div class="container-fluid">
       <div class="row ">
@@ -27,10 +31,9 @@
 <table id="example1" class="table table-bordered table-striped">
 
 <thead>
-
 <tr>
 <th>Origine</th>
-<th>Distination</th>
+<th>Destination</th>
 <th>Date Demande</th>
 <th>Description demande</th>
 <th>Evenement</th>
@@ -39,15 +42,21 @@
 <tbody>
 <tr>
 {% for lde in listDemandeEvenement  %}
-<td>{{lde.getDestination().getUtilisateur().getNom()}}</td>
-<td>{{lde.getDescriptionDemande()}}</td>
+<td>{{lde.getUtilisateur().getLogin()}}</td>
+<td>{{lde.getDestination().getNom()}}</td>
 <td>{{lde.getDateDemande()|date()}}</td>
-<td>{{lde.getDestination().getLibelle()}}</td>
+<td>{{lde.getLibelleEvenement()}}</td>
+
+
+
+
+
+
 <td><a href="{{ path('i',{'id':lde.getId()})}}">
 <input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"></button>
 </a></td>
   <td> <a href="{{ path('deleteDemandeEvenement',{'id':lde.id}) }}">Delete</a></td>
-  <td><a href="{{ path('updateDemandeEvenement',{'id':lde.id}) }}">Update</a></td>
+  <td><a href="{{ path('updateDemandeEvenement',{'id':lde.id}) }}" class="nav-link " style="color:rgb(190, 18, 18);">Update<i class="nav-icon fas fa-trash"></i></a></td>
 </tr>
  
 {%endfor%}

@@ -11,6 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+
 
 class CoutEvenementController extends AbstractController
 {
@@ -34,26 +37,46 @@ class CoutEvenementController extends AbstractController
         return $this->render('cout_evenement/index.html.twig', ["listCoutEvenement" => $CoutEvenement]);
     }
 
+ /**
+     * @Route("/coutEvenement/Affiche/{id}", name="AfficheCoutEvenementByIdDemandeEvenement")
+     */
+    public function showlistCoutEvenementByIdDemandeEvenement($id)
+    {
+       
+        $CoutEvenementByIdDemandeEvenement =$this->getDoctrine()->getRepository(CoutEvenement::class)->listCoutEvenementByIdDemandeEvenement($id);
+        return $this->render('cout_evenement/index.html.twig', ["listCoutEvenement" => $CoutEvenementByIdDemandeEvenement]);
+    }
+
 
 
     /**
-     * @Route("/coutEvenement/add", name="addCoutEvenement")
+     * @Route("/coutEvenement/add/{id}", name="addCoutEvenement")
      */
-    public function addCoutEvenement(Request $request)
+    public function addCoutEvenement(Request $request,$id)
     {
+        $CoutEvenementByIdDemandeEvenement =$this->getDoctrine()->getRepository(CoutEvenement::class)->listCoutEvenementByIdDemandeEvenement($id);
         $CoutEvenement = new CoutEvenement();
         $form = $this->createForm(CoutEvenementType::class, $CoutEvenement);
-        $form->add("Ajouter", SubmitType::class);
+       
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        $clicked = $request->request->get('clicked');
+        if ($form->isSubmitted()&& $form->isvalid()) {
+            if($clicked === 'Ajouter'){
+            $CoutEvenement->setDemandeEvent($id); 
             $em = $this->getDoctrine()->getManager();
-
             $em->persist($CoutEvenement);
-            $em->flush();
-            return $this->redirectToRoute('AfficheCoutEvenement');
+         //   dd($CoutEvenement);
+            $em->flush(); 
+            }
         }
-        return $this->render("cout_evenement/add.html.twig", array('form' => $form->createView()));
+        return $this->render("cout_evenement/add.html.twig", array('form' => $form->createView(),'listCoutEvenement' =>$CoutEvenementByIdDemandeEvenement,'id' =>$id));
     }
+
+
+
+
+
+
 
 
     /**
@@ -65,6 +88,9 @@ class CoutEvenementController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($CoutEvenement);
         $em->flush();
+        $this->addFlash(
+            'info',
+            'Delet Successfully');
         return $this->redirectToRoute("AfficheCoutEvenement");
     }
     /**

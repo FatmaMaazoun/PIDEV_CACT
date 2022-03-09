@@ -1,78 +1,92 @@
 
-
 {% extends 'base.html.twig' %}
 
 
+
+
 {% block body %}
+ 
+				
+<h3>Ajouter une demande D'évenement</h3>
 
-<div class="card card-info ">
-<div class="card-header">
-<h3 class="card-title">Ajouter une demande D'évenement</h3>
+  
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+<div class="form-row">
+          <div class="form-group col-3">
+            {{ form_row(form.destination ) }}
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.utilisateur ) }}
+          </div>
+
+          
+          <div class="form-group col-4">
+            {{ form_row(form.date_demande,{'label': 'Date Demande'}) }}
+</div> 
 </div>
-<div class="card-body">
+            
 
-{{ form_start(form) }}
+<div class="form-row">
+ <div class="form-group col-5">
+            {{ form_row(form.description_demande ) }}
+            </div>
+    <div class="form-group col-5">
+          
+                {{ form_row(form.libelleEvenement,{'label': 'Evenement'} ) }}
+            </div>
+
+<div class="form-row">
+          <div class="form-group col-6">
+            {{ form_row(form.date_debutEvent,{'label': 'Date Debut Evenement'} ) }}
+          </div>
+          <div class="form-group col-6">
+                      {{ form_row(form.heure_debutEvent,{'label': 'Heure Date Evenement'} ) }}
+
+
+          </div>
+           
+            </div>
+            <div class="form-row">
+          <div class="form-group col-5">
+                      {{ form_row(form.date_finEvent,{'label': 'Date Fin Evenement'} ) }}
+
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.heure_finEvent,{'label': 'Heure Fin Evenement'}  ) }}
+
+          </div>
+           
+            </div>
+  <div class="form-row">
+          <div class="form-group col-5">
+            {{ form_row(form.description_event ,{'label': 'Discription Evenement'}  ) }}
+          </div>
+          <div class="form-group col-5">
+            {{ form_row(form.capacite) }}
+
+          </div>
+           
+            </div>
+             <div class="form-row">
+          <div class="form-group col-md-5">
+            {{ form_row(form.image ) }}
+          </div>
+            </div>
 
 
 <div class="form-group">
-<label>Destination</label>
-  {{ form_widget(form.destination) }}
+
+  {{ form_widget(form.statut,{ 'attr' : { 'style':'display:none'}}) }}
 </div>
+ 
 
+<div class="  modal-footer justify-content-betwwen">
+  <button method="POST" name="clicked"  value="Ajouter"  class="waves-effect waves-light btn-small" style="background: #00cf67">Ajouter</button>
 
-
-<div class="form-group">
-<label>Date Demande</label>
-  {{ form_widget(form.date_demande) }}
 </div>
-
-<div class="form-group">
-<label>Status</label>
-  {{ form_widget(form.statut) }}
-</div>
-
-
-<div class="form-group">
-<label>Description Demande</label>
-  {{ form_widget(form.description_demande) }}
-</div>
-
-
-<div class="form-group">
-<label>Date Debut Evenement</label>
-  {{ form_widget(form.date_debutEvent) }}
-</div>
-
-<div class="form-group">
-<label>Date Fin Evenement</label>
-  {{ form_widget(form.date_finEvent) }}
-</div>
-
-
-
-<div class="form-group">
-<label>Heure Debut Evenement</label>
-  {{ form_widget(form.heure_debutEvent) }}
-</div>
-
-<div class="form-group">
-<label>Heure Fin Evenement</label>
-  {{ form_widget(form.heure_finEvent) }}
-</div>
-
-
-<div class="form-group">
-<label>Description Evenement</label>
-  {{ form_widget(form.description_event) }}
-</div>
-
-
-<div class="form-group">
-<label>Capacite</label>
-  {{ form_widget(form.capacite) }}
-</div>
-{{ form_errors(form) }}
+ </div>
+  {{ form_errors(form) }}
 {{ form_end(form) }}
-</div>
-</div>
-{% endblock %}
+
+ {% endblock %}
+
