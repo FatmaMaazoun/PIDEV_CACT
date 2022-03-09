@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier Avis{% endblock %}
+{% block title %}Modifier Media{% endblock %}
 
 {% block body %}
-    <h1>Modifier Media</h1>
+    <h1>Modifier media</h1>
 
-    {{ include('media/_form.html.twig', {'button_label': 'Modifier'}) }}
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} )  }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-success">Créer</button>
+    <a type="button" href="{{ path('avis_affiche') }}" class="btn btn-primary">Retour</a>
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
 
-    <a href="{{ path('media_index') }}">back to list</a>
 
-    {{ include('media/_delete_form.html.twig') }}
 {% endblock %}

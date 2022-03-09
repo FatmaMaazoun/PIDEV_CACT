@@ -1,7 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DestinationController!{% endblock %}
 
 {% block body %}
-bon courage fatouma
+
+
+<!-- /.row -->
+<div class="card-body">
+  <a class="btn btn-block btn-secondary "  href="{{path('create_destination')}}" style="margin-left:730px;width:200px">
+    Ajouter une Destination
+  </a>
+  </div>
+<div class="row fixed" style="margin-left:3%">
+    <div class="col-16">
+      <div class="card">
+        <div class="card-header">
+          <h3  >Liste des Destinations</h3>
+
+          
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 360px;width:900px;">
+          <table class="table table-head-fixed  table align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>telephone</th>
+                <th>Description</th>
+                <th>Sous categorie</th>
+                <th>Adresse</th>
+                <th>Delegations</th>
+                <th>Image</th>
+                <th>editer</th>
+                <th>supprimer</th>
+              </tr>
+            </thead>
+           
+            <tbody>
+              {% for des in liste_destination %}
+            <tr>
+              <td>{{des.id}}</td>
+              <td>{{des.nom}}</td>
+              <td>{{des.email}}</td>
+              <td>{{des.numTel}}</td>
+              <td>{{des.description}} </td>
+              <td>{{des.souscategorie.libelle}}</td>
+              <td>{{des.adresse}}</td>
+              <td>{{des.delegation.nom}}</td>
+              <td><img src="{{ asset ('upload/image/'~ des.image)}}"  style="width:40px;height:40px"/></td>
+              ><td><a href="{{path('update_destination',{'id':des.id})}}" class="nav-link" style="color:rgb(224, 110, 3);">
+                  <i class="nav-icon fas fa-edit"></i></a></td>
+              <td><a href="{{path('delete_destination',{'id':des.id})}}" class="nav-link " style="color:rgb(190, 18, 18);">
+                  <i class="nav-icon fas fa-trash"></i></a></td>
+              
+             
+            </tr>
+            {% endfor %}
+           
+              
+          </tbody>
+
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+  
+  
+  
 {% endblock %}

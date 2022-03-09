@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DelegationController!{% endblock %}
+
+{% block body %}
+
+
+<!-- /.row -->
+{{ render(controller('App\\Controller\\DelegationController:create')) }}
+
+<div class="row fixed" style="margin-left:3%">
+    <div class="col-16">
+      <div class="card">
+        <div class="card-header">
+          <h3  >Liste des Délégations</h3>
+
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+
+
+              
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0" style="height: 360px;width:950px;">
+          <table class="table table-head-fixed  table align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Délégation</th>
+                <th>Gouvernorat</th>
+                <th>editer</th>
+                <th>supprimer</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for cat in liste_delegations %}
+              <tr>
+                <td>{{cat.id}}</td>
+                <td>{{cat.nom}} </td>
+                <td class="text-break">{{cat.gouvernorat.nom}}</td>
+                   <td><a href="{{path('update_delegation',{'id':cat.id})}}" class="nav-link" style="color:rgb(224, 110, 3);">
+                    <i class="nav-icon fas fa-edit"></i></a></td>
+                <td><a href="{{path('delete_delegation',{'id':cat.id})}}" class="nav-link " style="color:rgb(190, 18, 18);">
+                  <i class="nav-icon fas fa-trash"></i></a></td>
+               
+              </tr>
+              {% endfor %}
+             
+                
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+  
+   
+
+  
+{% endblock %}

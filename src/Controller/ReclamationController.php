@@ -31,7 +31,7 @@ class ReclamationController extends AbstractController
 
     public function afficherec(ReclamationRepository $Repository)
     {
-        $reclamation= $Repository->findAll();
+        $reclamation = $Repository->findAll();
         return $this->render('reclamation/listerec.html.twig', [
             'reclamation' => $reclamation,
         ]);
@@ -45,35 +45,34 @@ class ReclamationController extends AbstractController
      */
     public function delete($id)
     {
-        $em=$this->getDoctrine()->getManager();
-        $reclamation=$em->getRepository(Reclamation::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $reclamation = $em->getRepository(Reclamation::class)->find($id);
         $em->remove($reclamation);
         $em->flush();
-        $response=new Response();
+        $response = new Response();
         $response->send();
         return $this->redirectToRoute('listrec');
-
     }
     /**
      * @Route("/newreclamation", name="newreclamation")
      */
 
-    public function newreseclamation(Request $request )
-    {   $reclamation = new Reclamation();
+    public function newreseclamation(Request $request)
+    {
+        $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form -> add ('Add.a.new.Reclamation', SubmitType::Class);
-        $form -> handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        $form->add('Add.a.new.Reclamation', SubmitType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $reclamation = $form->getData();
-            $em= $this->getDoctrine()->getManager();
-            $em->persist ($reclamation);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reclamation);
             $em->flush();
             return $this->redirectToRoute('listrec');
         }
         return $this->render('reclamation/newreclamation.html.twig', [
-            'form_title'=>"Ajouter Une Reclamation",
-            'form' => $form -> createView (),
+            'form_title' => "Ajouter Une Reclamation",
+            'form' => $form->createView(),
         ]);
     }
     /**
@@ -81,19 +80,18 @@ class ReclamationController extends AbstractController
      */
     public function updatereclamation(Request $request, $id)
     {
-        $em=$this->getDoctrine()->getManager();
-        $reclamation=$em->getRepository(Reclamation::class)->find($id);
-        $form=$this->createForm(ReclamationType::class,$reclamation);
-        $form->add('Update/Modifier',SubmitType::Class);
+        $em = $this->getDoctrine()->getManager();
+        $reclamation = $em->getRepository(Reclamation::class)->find($id);
+        $form = $this->createForm(ReclamationType::class, $reclamation);
+        $form->add('Update/Modifier', SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
             return $this->redirectToRoute('listrec');
         }
-        return $this->render('reclamation/updatereclamation.html.twig',[
-            'form_title'=>"Modifier Une Reclamation",
-            'form'=>$form-> createView(),
+        return $this->render('reclamation/updatereclamation.html.twig', [
+            'form_title' => "Modifier Une Reclamation",
+            'form' => $form->createView(),
         ]);
     }
 }

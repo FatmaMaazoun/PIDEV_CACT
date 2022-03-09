@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\MediaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+Use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
@@ -14,22 +16,27 @@ class Media
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("produit")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="image est obligatoire")
+     * @Groups("produit")
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="video est obligatoire")
      */
     private $video;
 
     /**
      * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="media")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="produit est obligatoire")
      */
     private $produit;
 

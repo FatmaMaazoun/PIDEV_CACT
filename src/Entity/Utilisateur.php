@@ -6,7 +6,8 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  */
@@ -16,46 +17,58 @@ class Utilisateur
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("utilisateur")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("utilisateur")
      */
     private $login;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("utilisateur")
+     *
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
+     * @Groups("utilisateur")
      */
     private $role;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("utilisateur")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("utilisateur")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("utilisateur")
      */
     private $date_naissance;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * * @Assert\NotBlank(message="Email est obligatoire")
+     * ** @Assert\Email(message = "The email '{{ value }}' est invalide email.")
+     * @Groups("utilisateur")
      */
     private $email;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("utilisateur")
      */
     private $num_tel;
 
@@ -74,11 +87,17 @@ class Utilisateur
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=DemandeEvenement::class, mappedBy="utilisateur")
+     */
+    private $demandeEvenements;
+
     public function __construct()
     {
         $this->destinations = new ArrayCollection();
         $this->avis = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->demandeEvenements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,27 +209,9 @@ class Utilisateur
         return $this->destinations;
     }
 
-    public function addDestination(Destination $destination): self
-    {
-        if (!$this->destinations->contains($destination)) {
-            $this->destinations[] = $destination;
-            $destination->setUtilisateur($this);
-        }
 
-        return $this;
-    }
 
-    public function removeDestination(Destination $destination): self
-    {
-        if ($this->destinations->removeElement($destination)) {
-            // set the owning side to null (unless already changed)
-            if ($destination->getUtilisateur() === $this) {
-                $destination->setUtilisateur(null);
-            }
-        }
 
-        return $this;
-    }
 
     /**
      * @return Collection<int, Avis>
@@ -271,7 +272,38 @@ class Utilisateur
 
         return $this;
     }
-    public function __toString() {
+    public function __toString()
+    {
         return  $this->login;
-}
+    }
+
+    /**
+     * @return Collection<int, DemandeEvenement>
+     */
+    public function getDemandeEvenements(): Collection
+    {
+        return $this->demandeEvenements;
+    }
+
+    public function addDemandeEvenement(DemandeEvenement $demandeEvenement): self
+    {
+        if (!$this->demandeEvenements->contains($demandeEvenement)) {
+            $this->demandeEvenements[] = $demandeEvenement;
+            $demandeEvenement->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeEvenement(DemandeEvenement $demandeEvenement): self
+    {
+        if ($this->demandeEvenements->removeElement($demandeEvenement)) {
+            // set the owning side to null (unless already changed)
+            if ($demandeEvenement->getUtilisateur() === $this) {
+                $demandeEvenement->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
 }

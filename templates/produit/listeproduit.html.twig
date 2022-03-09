@@ -1,27 +1,49 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <table border="1">
+    <div class="row fixed" style="margin-left:5%;margin-top:5%">
+    <div class="col-16">
+    <div class="card">
+    <div class="card-header">
+        <h3  >Liste des Produits</h3>
+
+        <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+
+
+            </div>
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-0" style="height:400px;width:1000px;">
+    <table class="table table-head-fixed  table align-middle">
+        <thead>
         <tr>
             <td>id</td>
             <td>description</td>
             <td>avis</td>
-            <td>media</td>
         </tr>
+        </thead>
         {% for produit in produi %}
             <tr>
                 <td>{{ produit.id }}</td>
                 <td>{{ produit.description }}</td>
                 <td>{{ produit.avis }}</td>
-                <td>{% for media in produit.media %}
-                {{ media.id }}</td>
-                {% endfor %}
+
                 <td><a href="{{  path('prod_delete',{id:produit.id})}}" onclick="return confirm('Etes-vous sur de supprimer ce produit?');">
                         <button class="btn btn-danger" >Supprimer</button> </a></td>
                 <td><a href="{{  path('prod_update',{id:produit.id})}}" >
                         <button class="btn btn-danger" >Modifier</button> </a></td>
             </tr>
         {% endfor %}
+        </tbody>
     </table>
+    </div>
+        <!-- /.card-body -->
+    </div>
+        <!-- /.card -->
+    </div>
+    </div>
+
     <td><a href="{{  path('prod_add')}}" >
             <button class="btn btn-danger" >Ajouter</button> </a></td>
 {% endblock %}

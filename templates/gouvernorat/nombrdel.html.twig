@@ -1,0 +1,13 @@
+
+   {% if delegations|length == 0 %}
+     <div class="badge bg-danger" style="width:50px;text-align:center;font-size:medium;margin-left:40%">{{delegations|length}}
+     </div>
+   {% endif %}
+   {% if delegations|length >=1 %}
+     <div class="badge bg-success" style="width:50px;text-align:center;font-size:medium;margin-left:40%">{{delegations|length}}
+     </div>
+   {% endif %}
+
+
+
+

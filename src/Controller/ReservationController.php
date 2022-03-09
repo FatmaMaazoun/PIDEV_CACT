@@ -23,7 +23,7 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    /**
+    
     /**
      * @param ReservationRepository $Repository
      * @return \symfony\Component\HttpFoundation\Response
@@ -31,7 +31,7 @@ class ReservationController extends AbstractController
      */
     public function afficheres(ReservationRepository $Repository)
     {
-        $resevent= $Repository->findAll();
+        $resevent = $Repository->findAll();
         return $this->render('reservation/listeres.html.twig', [
             'reservation' => $resevent,
         ]);
@@ -45,35 +45,34 @@ class ReservationController extends AbstractController
      */
     public function delete($id)
     {
-        $em=$this->getDoctrine()->getManager();
-        $reservation=$em->getRepository(Reservation::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $reservation = $em->getRepository(Reservation::class)->find($id);
         $em->remove($reservation);
         $em->flush();
-        $response=new Response();
+        $response = new Response();
         $response->send();
         return $this->redirectToRoute('listres');
-
     }
     /**
      * @Route("/newreservation", name="newreservation")
      */
 
-    public function newreservation(Request $request )
-    {   $reservation = new Reservation();
+    public function newreservation(Request $request)
+    {
+        $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
-        $form -> add ('Add.a.new.Reservation', SubmitType::Class);
-        $form -> handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        $form->add('Add.a.new.Reservation', SubmitType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $reservation = $form->getData();
-            $em= $this->getDoctrine()->getManager();
-            $em->persist ($reservation);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reservation);
             $em->flush();
             return $this->redirectToRoute('listres');
         }
         return $this->render('reservation/newreservation.html.twig', [
-            'form_title'=>"Ajouter Une Reservation",
-            'form' => $form -> createView (),
+            'form_title' => "Ajouter Une Reservation",
+            'form' => $form->createView(),
         ]);
     }
 
@@ -82,20 +81,18 @@ class ReservationController extends AbstractController
      */
     public function updatereservation(Request $request, $id)
     {
-        $em=$this->getDoctrine()->getManager();
-        $reservation=$em->getRepository(Reservation::class)->find($id);
-        $form=$this->createForm(ReservationType::class,$reservation);
-        $form->add('Update/Modifier',SubmitType::Class);
+        $em = $this->getDoctrine()->getManager();
+        $reservation = $em->getRepository(Reservation::class)->find($id);
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->add('Update/Modifier', SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
             return $this->redirectToRoute('listres');
         }
-        return $this->render('reservation/updatereservation.html.twig',[
-            'form_title'=>"Modifier Une Reservation",
-            'form'=>$form-> createView(),
+        return $this->render('reservation/updatereservation.html.twig', [
+            'form_title' => "Modifier Une Reservation",
+            'form' => $form->createView(),
         ]);
     }
-
 }

@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Repository\DestinationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DestinationRepository::class)
+ * @ORM\Entity(repositoryClass=App\Repository\DestinationRepository::class)
  */
 class Destination
 {
@@ -19,45 +21,64 @@ class Destination
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $Date_Demande_des;
 
     /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $statut;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 1500,
+     *      minMessage = " la description doit avoir au minimum  {{ limit }} caractéres ",
+     *      maxMessage = " la description doit avoir au maximum {{ limit }} caractéres"
+     * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex( pattern = "/^[a-zA-Z]+/",message="le nom doit commencer par des lettres ")
+     * @Assert\NotBlank(message="le nom est obligatoire")
      */
-    private $libelle;
+    private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="l'image est obligatoire")
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex( pattern = "/^[0-9][0-9], rue [a-zA-Z]/",message="Exemple d'adresse: 14, rue aghleb tamimi ")
+     * @Assert\NotBlank(message="le nom est obligatoire")
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
      */
-    private $num_tel;
+    private $numTel;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="l'email est obligatoire")
+     * @Assert\Email(message = "L'email '{{ value }}' n'est pas valide.") 
      */
     private $email;
+
+
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Delegation::class, inversedBy="destinations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $delegation;
 
     /**
      * @ORM\ManyToOne(targetEntity=SousCategorie::class, inversedBy="destinations")
@@ -66,35 +87,12 @@ class Destination
     private $souscategorie;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="destinations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $utilisateur;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CoutCategorie::class, mappedBy="destination", orphanRemoval=true)
-     */
-    private $coutCategories;
-
-
-
-    /**
-     * @ORM\OneToMany(targetEntity=Cout::class, mappedBy="destination", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Cout::class, mappedBy="destination")
      */
     private $couts;
 
-
-     /**
-     * @ORM\OneToMany(targetEntity=CoutCategorie::class, mappedBy="destination", orphanRemoval=true)
-     */
-    private $DemandeEvenements;
-   
-
     public function __construct()
     {
-        $this->coutCategories = new ArrayCollection();
-
-
         $this->couts = new ArrayCollection();
     }
 
@@ -103,29 +101,6 @@ class Destination
         return $this->id;
     }
 
-    public function getDateDemandeDes(): ?\DateTimeInterface
-    {
-        return $this->Date_Demande_des;
-    }
-
-    public function setDateDemandeDes(\DateTimeInterface $Date_Demande_des): self
-    {
-        $this->Date_Demande_des = $Date_Demande_des;
-
-        return $this;
-    }
-
-    public function getStatut(): ?string
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(string $statut): self
-    {
-        $this->statut = $statut;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -139,24 +114,24 @@ class Destination
         return $this;
     }
 
-    public function getLibelle(): ?string
+    public function getNom(): ?string
     {
-        return $this->libelle;
+        return $this->nom;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setNom(string $nom): self
     {
-        $this->libelle = $libelle;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage(?string $image): self
+    public function setImage($image): self
     {
         $this->image = $image;
 
@@ -177,12 +152,12 @@ class Destination
 
     public function getNumTel(): ?int
     {
-        return $this->num_tel;
+        return $this->numTel;
     }
 
-    public function setNumTel(int $num_tel): self
+    public function setNumTel(int $numTel): self
     {
-        $this->num_tel = $num_tel;
+        $this->numTel = $numTel;
 
         return $this;
     }
@@ -199,6 +174,20 @@ class Destination
         return $this;
     }
 
+
+
+    public function getDelegation(): ?Delegation
+    {
+        return $this->delegation;
+    }
+
+    public function setDelegation(?Delegation $delegation): self
+    {
+        $this->delegation = $delegation;
+
+        return $this;
+    }
+
     public function getSouscategorie(): ?SousCategorie
     {
         return $this->souscategorie;
@@ -210,52 +199,6 @@ class Destination
 
         return $this;
     }
-
-    public function getUtilisateur(): ?Utilisateur
-    {
-        return $this->utilisateur;
-    }
-
-    public function setUtilisateur(?Utilisateur $utilisateur): self
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-
-
-    /**
-     * @return Collection<int, CoutCategorie>
-     */
-    public function getCoutCategories(): Collection
-    {
-        return $this->coutCategories;
-    }
-
-    public function addCoutCategory(CoutCategorie $coutCategory): self
-    {
-        if (!$this->coutCategories->contains($coutCategory)) {
-            $this->coutCategories[] = $coutCategory;
-            $coutCategory->setDestination($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCoutCategory(CoutCategorie $coutCategory): self
-    {
-        if ($this->coutCategories->removeElement($coutCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($coutCategory->getDestination() === $this) {
-                $coutCategory->setDestination(null);
-            }
-        }
-
-        return $this;
-    }
-
-
 
     /**
      * @return Collection<int, Cout>
@@ -283,50 +226,6 @@ class Destination
                 $cout->setDestination(null);
             }
         }
-
-        return $this;
-    }
-
- /**
-     * @return Collection|DemandeEvenement[]
-     */
-    public function getDemandeEvenements(): Collection
-    {
-        return $this->DemandeEvenements;
-    }
-
-    public function addDemandeEvenement(DemandeEvenement $demandeEvenement): self
-    {
-        if (!$this->demandeEvenements->contains($demandeEvenement)) {
-            $this->demandeEvenements[] = $demandeEvenement;
-            $demandeEvenement->setDestination($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDemandeEvenement(DemandeEvenement $demandeEvenement): self
-    {
-        if ($this->demandeEvenements->removeElement($demandeEvenement)) {
-            // set the owning side to null (unless already changed)
-            if ($DemandeEvenement->getDemandeEvenement() === $this) {
-                $demandeEvenement->setDestination(null);
-            }
-        }
-
-        return $this;
-    }
-
-
-
-    public function getDelegation(): ?Delegation
-    {
-        return $this->delegation;
-    }
-
-    public function setDelegation(?Delegation $delegation): self
-    {
-        $this->delegation = $delegation;
 
         return $this;
     }
