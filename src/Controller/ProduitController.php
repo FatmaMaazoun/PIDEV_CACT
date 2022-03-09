@@ -5,15 +5,17 @@ namespace App\Controller;
 use App\Entity\Avis;
 use App\Entity\Media;
 use App\Entity\Produit;
+use App\Repository\ProduitRepository;
 use App\Form\AvisType;
 use App\Form\ProduitType;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
+use Sympfony\Component\Serializer\Normalizer\NormalizerInterface;
+Use Symfony\Component\Serializer\Annotation\Groups;
 
 class ProduitController extends AbstractController
 {
@@ -61,10 +63,12 @@ class ProduitController extends AbstractController
     /**
      * @Route("/deleteprod/{id}", name="prod_delete",requirements={"id":"\d+"})
      */
-    public function delete($id)
+    public function delete(Request $request,$id)
     {
-
+        $produit=new Produit();
         $produit = $this->getDoctrine()->getRepository(Produit::class)->find($id);
+        $form=$this->createForm(ProduitType::class,$produit);
+        $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
         $em->remove($produit);
         $em->flush();
@@ -107,3 +111,7 @@ class ProduitController extends AbstractController
          added successfully');
     }
 }
+
+
+
+

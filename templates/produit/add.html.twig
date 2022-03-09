@@ -5,9 +5,10 @@
 {% block body %}
     <h1>Créer nouvel Produit</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
     {{ form_widget(form) }}
     <button type="submit" class="btn btn-success">Créer</button>
+    <a type="button" href="{{ path('avis_affiche') }}" class="btn btn-primary">Retour</a>
     {{ form_errors(form) }}
     {{ form_end(form) }}
 
