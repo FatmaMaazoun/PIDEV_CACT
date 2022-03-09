@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Repository\CoutRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,20 +21,23 @@ class Cout
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(
+     *     type="float",message="le prix doit etre un entier.")
      */
     private $prix;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="couts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $destination;
 
     /**
      * @ORM\ManyToOne(targetEntity=CoutCategorie::class, inversedBy="couts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $coutcategorie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="couts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $destination;
 
     public function getId(): ?int
     {
@@ -51,17 +56,6 @@ class Cout
         return $this;
     }
 
-    public function getDestination(): ?Destination
-    {
-        return $this->destination;
-    }
-
-    public function setDestination(?Destination $destination): self
-    {
-        $this->destination = $destination;
-
-        return $this;
-    }
 
     public function getCoutcategorie(): ?CoutCategorie
     {
@@ -71,6 +65,18 @@ class Cout
     public function setCoutcategorie(?CoutCategorie $coutcategorie): self
     {
         $this->coutcategorie = $coutcategorie;
+
+        return $this;
+    }
+
+    public function getDestination(): ?Destination
+    {
+        return $this->destination;
+    }
+
+    public function setDestination(?Destination $destination): self
+    {
+        $this->destination = $destination;
 
         return $this;
     }

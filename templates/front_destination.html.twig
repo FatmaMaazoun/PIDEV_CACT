@@ -62,10 +62,7 @@
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	{% endblock %}
 
-		<!--[if lte IE 9]>
-		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
-			your browser</a> to improve your experience and security.</p>
-		<![endif]-->
+		
 
 
 
@@ -90,7 +87,7 @@
 							<div class="main-menu">
 							
 								<!-- Brand and toggle get grouped for better mobile display -->
-								<div class="navbar-header">
+								<div class="navbar-header " style="position: fixed;">
 									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 										<i class="fa fa-bars"></i>
 									</button><!-- / button-->
@@ -100,11 +97,9 @@
 										<li class="smooth-menu"><a href="#home">home</a></li>
 										<li class="smooth-menu"><a href="#evenement">Evenement</a></li>
 											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle"  href="#adresse" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-Adresse												</a>
-												<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color:rgb(231, 226, 226)" >
-												
-					
+												<a class="nav-link dropdown-toggle"  href="#adresse" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Adresse</a>	
+												<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color:rgb(255, 253, 253)"  >
+												<a href=""      class="nav-link" style="color:black"	></a><br/>
 												</div>
 											  </li> 
 
@@ -131,9 +126,8 @@ Adresse												</a>
 
 	
 		<!--about-us start -->
-		<section id="home" class="about-us">
-			<div class="container">
-				<div class="about-us-content">
+		<section class="about-us">
+			<div class="container-fluid">
 					<div class="row">
 						<div class="col-sm-12">
                                          
@@ -141,7 +135,6 @@ Adresse												</a>
                         
               {% endblock %}          
             
- </div>
                     
                         
                 
@@ -152,32 +145,7 @@ Adresse												</a>
 
 
 		<!--subscribe start-->
-		<section id="subs" class="subscribe">
-			<div class="container">
-				<div class="subscribe-title text-center">
-					<h2>
-						Join our Subscribers List to Get Regular Update
-					</h2>
-					<p>
-						Subscribe Now. We will send you Best offer for your Trip 
-					</p>
-				</div>
-				<form>
-					<div class="row">
-						<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-							<div class="custom-input-group">
-								<input type="email" class="form-control" placeholder="Enter your Email Here">
-								<button class="appsLand-btn subscribe-btn">Subscribe</button>
-								<div class="clearfix"></div>
-								<i class="fa fa-envelope"></i>
-							</div>
-
-						</div>
-					</div>
-				</form>
-			</div>
-
-		</section>
+		
 		<!--subscribe end-->
 
 		<!-- footer-copyright start -->

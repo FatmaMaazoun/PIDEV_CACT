@@ -1,0 +1,72 @@
+{% extends 'destination/destination_fornt.html.twig' %}
+{% block filtre  %}
+{% endblock %}
+ 
+              
+              {% block destinations %}
+              <section style="margin-left:10px">
+              
+                <div class="packages-content">
+                  <div class="row">
+                    {% for des in liste_destination  %}
+                    {% if des.id == 3 %}
+                    {% else %}
+                      <div class="col-md-4 col-sm-6">
+                      <div class="single-package-item">
+                        <img src="{{ asset ('upload/image/'~ des.image)}}" alt="blog-img"  style="height:200px;width:200px;margin-left: 75px;">
+                        <div class="single-package-item-txt">
+                          <h3>{{des.nom}} <span class="pull-right">                                        {{ render(controller('App\\Controller\\DestinationController:couts',  { 'id': des.id })) }}
+                          </span></h3>
+                          <div style="margin-top:8px">{{des.description}} </div>
+                            
+                          <p>
+                                           
+                            {{des.description}}
+                        </p>
+                      
+                       <br/>
+                        <p><b>Adresse </b> <br/>
+                       {{des.adresse}}, {{    des.delegation.nom}}  {{des.delegation.gouvernorat.nom}}</p>
+                       <br/>
+                       <p><b>Contact</b></p>
+
+                    
+                
+                    <div class="row">
+                      <div class="col-sm-2">
+                       <p>{{des.email}}</p>
+                      </div>
+                      <div class="col-sm-2">
+                       <p style="margin-left:160px">{{des.numTel}}</p> 
+                        </div>
+                        </div>
+                        
+                    
+                        
+                        </div><!--/.single-package-item-txt-->
+                      </div><!--/.single-package-item-->
+        
+        
+                    </div><!--/.col-->
+                    {% endif %}
+                    {% endfor %}
+                  </div><!--/.row-->
+                </div><!--/.packages-content-->
+              </div><!--/.container-->
+
+            </section><!--/.packages-->
+
+         
+            <!--packages end-->
+            
+            {% endblock  %}
+           
+
+        
+         
+             
+               
+              
+              
+          
+          

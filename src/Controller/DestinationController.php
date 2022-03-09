@@ -2,29 +2,68 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
+use App\Repository\DestinationRepository;
+use App\Entity\Cout;
 use App\Entity\Destination;
+use App\Entity\destinationSearch;
+use App\Entity\Gouvernorat;
+use App\Entity\SousCategorie;
+use App\Form\DestinationSearchType;
 use App\Form\DestinationType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\DBAL\Types\ArrayType;
+use Knp\Component\Pager\PaginatorInterface;
+use PhpParser\Node\Stmt\Catch_;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Validator\Constraints\Length;
 
-class DestinationController extends AbstractController
+class DestinationController extends Controller
 {
     /**
-     * @Route("/index", name="destination")
+     * @Route("/des", name="destination")
      */
-    public function index(): Response
+    public function index(Request $request, DestinationRepository $repo, PaginatorInterface $paginator): Response
     {
-        return $this->render('destination/index.html.twig', [
-            'controller_name' => 'DestinationController',
+
+        $search = new destinationSearch();
+        $form = $this->createForm(DestinationSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $liste_destination = $paginator->paginate($repo->findAllVisible($search), $request->query->getInt('page', 1), 3);
+
+        $souscategories = $this->getDoctrine()->getRepository(SousCategorie::class)->findAll();
+        $categorie = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+        return $this->render('destination/destination_fornt.html.twig', [
+            "souscat" => $categorie,
+            "souscategories" => $souscategories,
+            'liste_destination' => $liste_destination,
+            'form' => $form->createView()
+
+
+        ]);
+    }
+    /**
+     * @Route("/dest/{id}", name="showcout")
+     */
+    public function couts($id)
+    {
+        $destination = $this->getDoctrine()->getRepository(Destination::class)->find($id);
+        $cout = $this->getDoctrine()->getRepository(Cout::class)->findBy(array('destination' => $destination->getId()));
+
+        return $this->render('destination/showcout.html.twig', [
+            "destination" => $destination,
+            "cout" => $cout,
         ]);
     }
 
+
     /**
-     * @Route("/Destination/ajouter", name="create_delegation")
+     * @Route("/Destination/ajouter", name="create_destination")
      */
     public function create(Request $request): Response
     {
@@ -53,7 +92,7 @@ class DestinationController extends AbstractController
             $em->flush();
 
 
-            return $this->redirectToRoute('create_delegation');
+            return $this->redirectToRoute('read_destination');
         } else {
             return $this->render('destination/adddestination.html.twig', [
                 'controller_name' => 'DestinationController',
@@ -116,5 +155,71 @@ class DestinationController extends AbstractController
                 ['form' => $form->createView()]
             );
         }
+    }
+
+    /**
+     * @Route("/destinationbycategorie/{id}", name="destination_essai")
+     */
+    public function destByCategorie(Request $request, DestinationRepository $repo, $id): Response
+    {
+        $search = new destinationSearch();
+        $form = $this->createForm(DestinationSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $liste_destination = $repo->findDestinationByString($id);
+        $categorie = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+
+
+
+
+
+        return $this->render('destination/destination.html.twig', [
+            'controller_name' => 'DestinationController',
+            "souscat" => $categorie,
+
+            'liste_destination' => $liste_destination,
+            'form' => $form->createView()
+
+        ]);
+    }
+
+    /**
+     * @Route("/destinationbycouts", name="prix")
+     */
+    public function destinationbycouts(): Response
+    {
+        return $this->render('destination/essai.html.twig', []);
+    }
+
+    /**
+     * @Route("/destination/statistiques", name="statistiques")
+     */
+    public function statistiques(DestinationRepository $repo): Response
+    {
+        $Gouvernorats = $this->getDoctrine()->getRepository(Gouvernorat::class)->findAll();
+
+        $datagouv = array();
+        $labelgouv = array();
+        foreach ($Gouvernorats as $cat) {
+            array_push($datagouv, $repo->DestinationByGouvernoratstat($cat->getId()));
+            array_push($labelgouv, $cat->getNom());
+        }
+        $souscategories = $this->getDoctrine()->getRepository(SousCategorie::class)->findAll();
+
+
+        $data = array();
+        $label = array();
+        foreach ($souscategories as $cat) {
+            array_push($data, $repo->destinationStat($cat->getId()));
+            array_push($label, $cat->getLibelle());
+        }
+        return $this->render('destination/statistiques.html.twig', [
+            'data' => json_encode($data),
+            'label' => json_encode($label),
+            'datagouv' => json_encode($datagouv),
+            'labelgouv' => json_encode($labelgouv),
+
+
+        ]);
     }
 }

@@ -1,0 +1,19 @@
+
+  
+  <span  class="smooth-menu" >
+                                    
+                                
+                                
+    <div class="d-flex">
+      <div class="dropup">
+        <button class=" about-view packages-btn"  id="deroulanta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"  style="background-color: rgb(207, 209, 211);border-color: rgb(200, 208, 214);">Tarif</button>
+        <div class="dropdown-menu" aria-labelledby="deroulanta">
+        
+          {% for cout in cout %}
+          <p class="dropdown-item" style="margin-left:20px;">{{cout.coutcategorie.libelle}}<span style="margin-left:20px;" >   {{cout.prix}} </span>DT</p><br/>
+          
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </span>
