@@ -101,15 +101,15 @@ class ProduitController extends AbstractController
     /**
      * @Route("/add", name="add_produit")
      */
-    public function aaddproduit(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
-    {
-        $content = $request->getContent();
-        $data = $serializer->deserialize($content, Categorie::class, 'json');
-        $em->persist($data);
-        $em->flush();
-        return new Response('produit
-         added successfully');
-    }
+    // public function aaddproduit(Request $request, NormalizerInterface $serializer, EntityManagerInterface $em)
+    // {
+    //     $content = $request->getContent();
+    //     $data = $serializer->deserialize($content, Categorie::class, 'json');
+    //     $em->persist($data);
+    //     $em->flush();
+    //     return new Response('produit
+    //      added successfully');
+    // }
 }
 
 
