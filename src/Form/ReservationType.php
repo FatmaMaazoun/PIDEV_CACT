@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ReservationType extends AbstractType
 {
@@ -24,6 +25,7 @@ class ReservationType extends AbstractType
                         'Cloturée'=>'Cloturée',
                         'Annulée'=>'Annulée',]
                 ])
+            ->add('enregistrer',SubmitType::class)
             ->add('cout')
             ->add('demandeEvent')
             ->add('utilisateur')

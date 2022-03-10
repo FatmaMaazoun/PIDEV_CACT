@@ -6,6 +6,8 @@ use App\Entity\Billet;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BilletType extends AbstractType
 {
@@ -15,6 +17,8 @@ class BilletType extends AbstractType
             ->add('nombre_billet')
             ->add('reservation')
             ->add('coutEvent')
+            ->add('enregistrer',SubmitType::class)
+
         ;
     }
 

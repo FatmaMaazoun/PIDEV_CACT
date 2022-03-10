@@ -50,7 +50,7 @@ class CoutEvenementController extends AbstractController
 
 
     /**
-     * @Route("/coutEvenement/add/{id}", name="addCoutEvenement")
+     * @Route("/coutEvenement/add", name="addCoutEvenement")
      */
     public function addCoutEvenement(Request $request,$id)
     {
@@ -71,12 +71,6 @@ class CoutEvenementController extends AbstractController
         }
         return $this->render("cout_evenement/add.html.twig", array('form' => $form->createView(),'listCoutEvenement' =>$CoutEvenementByIdDemandeEvenement,'id' =>$id));
     }
-
-
-
-
-
-
 
 
     /**

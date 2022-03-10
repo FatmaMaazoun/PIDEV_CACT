@@ -1,10 +1,16 @@
 {% extends 'base.html.twig' %}
  {% block title %}
-     <h1> Liste des Reclamations </h1>
+      Liste des Billets
  {% endblock %}
 
  {% block body %}
-<table border="1">
+     {% for message in app.flashes('info') %}
+         <div class="alert alert-success">
+             {{ message }}
+         </div>
+     {% endfor %}
+     <h1 style="margin-left:300px;text-align:center"><strong style="color:blue">Liste des billets</strong></h1>
+     <table border="1" class="table text-nowrap table-bordered table-striped" style="width:700px;height:90px;margin-top:1%;margin-left:100px">
     <tr>
         <th scope="row">ID</th>
         <th scope="row">Nombre de Billets</th>
@@ -19,7 +25,7 @@
                 <button class="btn btn-danger" >Supprimer</button> </a></td>
     </tr>
         {% endfor %}
-</table>
-     <div style="margin-left:50px;"> <a class="btn-info" href="{{path('newbillet')}}"> Ajouter une nouvelle Billet </a>
+     </table>
+     <div style="margin-left:400px;"> <a class="btn-info" href="{{path('newbillet')}}"> Ajouter une nouvelle Billet </a>
      </div>
 {% endblock %}

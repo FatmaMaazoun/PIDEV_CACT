@@ -49,7 +49,10 @@ class BilletController extends AbstractController
         $billet = $em->getRepository(Billet::class)->find($id);
         $em->remove($billet);
         $em->flush();
-        $response = new Response();
+        $this->addFlash(
+            'info',
+            'Deleted Successfully');
+        $response=new Response();
         $response->send();
         return $this->redirectToRoute('listbill');
     }
@@ -68,6 +71,9 @@ class BilletController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($reclamation);
             $em->flush();
+            $this->addFlash(
+                'info',
+                'Added Successfully');
             return $this->redirectToRoute('listbill');
         }
         return $this->render('billet/newbillet.html.twig', [
@@ -87,6 +93,9 @@ class BilletController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash(
+                'info',
+                'Updated Successfully');
             return $this->redirectToRoute('listref');
         }
         return $this->render('billet/updatebillet.html.twig', [

@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
  {% block title %}
-     <h1> Liste des Reservations </h1>
+      Liste des Reservations
  {% endblock %}
 
  {% block body %}
-<table border="1">
+     {% for message in app.flashes('info') %}
+         <div class="alert alert-success">
+             {{ message }}
+         </div>
+     {% endfor %}
+     <h1 style="margin-left:300px;text-align:center"><strong style="color:blue">Liste des reservations</strong></h1>
+     <div class="d-flex align-items-center"><input class="form-control" type="search" id="search" placeholder="Search by Nom">
+     </div>
+     <table border="1" class="table text-nowrap table-bordered table-striped" style="width:700px;height:90px;margin-top:1%;margin-left:100px">
     <tr>
         <th scope="row">ID</th>
         <th scope="row">Date Reservation</th>
@@ -14,20 +22,43 @@
 
 
     </tr>
-     {% for res in reservation %}
-     <tr>
-         <td>{{ res.id}} </td>
-         <td>{{ res.getDateRes()|date('d-m-y') }}</td>
-         <td>{{ res.getHeureRes()|date(' H:i:s') }}</td>
-         <td>{{ res.statut }}</td>
-         <td>{{ res.cout }}</td>
-         <td><a href="{{  path('updatereservation',{id:res.id})}}"> <button class="btn btn-secondary">Modifier</button></a> </td>
-         <td><a href="{{  path('deletereservation',{id:res.id})}}" onclick="return confirm('Etes-vous sur de supprimer cette reservation?');">
-                 <button class="btn btn-danger" >Supprimer</button> </a></td>
-     </tr>
-     {% endfor %}
+    <tbody id="all">
+         {% include 'reservation/ResAjax.html.twig' %}
+    </tbody>
 </table>
-    <div style="margin-left:50px;"> <a class="btn-info" href="{{path('newreservation')}}"> Ajouter une nouvelle Reservation </a>
+    <div style="margin-left:300px;"> <a class="btn-info" href="{{path('newreservation')}}"> Ajouter une nouvelle Reservation </a>
     </div>
 
-    {% endblock %}
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script>
+         $( document ).ready(function() {
+             var currentRequest = null;
+             $("#search").keyup(function(e){
+
+                 var value = $(this).val();
+                 if(currentRequest != null) {
+                     currentRequest.abort();
+                 }
+
+                 currentRequest = $.ajax({
+
+                     url : "{{ path('searchres') }}",
+                     type : 'GET',
+                     data: {
+                         'searchValue' : value
+                     },
+
+                     success : function(retour)
+                     {
+                         $('#all').html(retour);
+
+                     },
+                 });
+                 return false;
+             });
+         });
+     </script>
+     </script>
+
+
+ {% endblock %}
