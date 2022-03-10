@@ -229,4 +229,36 @@ class Destination
 
         return $this;
     }
+
+ /**
+     * @return Collection|DemandeEvenement[]
+     */
+    public function getDemandeEvenements(): Collection
+    {
+        return $this->DemandeEvenements;
+    }
+
+    public function addDemandeEvenement(DemandeEvenement $demandeEvenement): self
+    {
+        if (!$this->demandeEvenements->contains($demandeEvenement)) {
+            $this->demandeEvenements[] = $demandeEvenement;
+            $demandeEvenement->setDestination($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeEvenement(DemandeEvenement $demandeEvenement): self
+    {
+        if ($this->demandeEvenements->removeElement($demandeEvenement)) {
+            // set the owning side to null (unless already changed)
+            if ($DemandeEvenement->getDemandeEvenement() === $this) {
+                $demandeEvenement->setDestination(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

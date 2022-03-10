@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BilletRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BilletRepository::class)
@@ -19,6 +20,7 @@ class Billet
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(message="nombre_billet is required")
      */
     private $nombre_billet;
 

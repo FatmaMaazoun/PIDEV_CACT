@@ -1,0 +1,26 @@
+
+<div class="table-responsive">
+    <table border="2" class="table mb-0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date de reservation</th>
+            <th>Heure de reservation</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {%   for res in reservation  %}
+            <tr>
+                <td>{{ res.id}} </td>
+                <td>{{ res.getDateRes()|date('d-m-y') }}</td>
+                <td>{{ res.getHeureRes()|date(' H:i:s') }}</td>
+                <td>{{ res.statut }}</td>
+                <td>{{ res.cout }}</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+
+    </table>
+</div>

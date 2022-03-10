@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ReclamationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=ReclamationRepository::class)
@@ -14,21 +18,27 @@ class Reclamation
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("reclamation")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Type is required")
+     * @Groups("reclamation")
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="description is required")
+     * @Groups("reclamation")
      */
     private $description;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("reclamation")
      */
     private $date_rec;
 
@@ -37,6 +47,11 @@ class Reclamation
      * @ORM\JoinColumn(nullable=false)
      */
     private $reservation;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $etat;
 
     public function getId(): ?int
     {
@@ -90,4 +105,18 @@ class Reclamation
 
         return $this;
     }
+
+    public function getEtat(): ?int
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?int $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+
 }

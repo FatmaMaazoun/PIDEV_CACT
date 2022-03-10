@@ -18,7 +18,24 @@ class ReservationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reservation::class);
     }
+    public function getNB()
+    {
 
+        $qb = $this->createQueryBuilder('c')
+            ->select('COUNT(c.id) AS res, (c.demandeEvent) AS event')
+            ->groupBy('event');
+        return $qb->getQuery()
+            ->getResult();
+    }
+    public function findrdvBydate($reservation)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.statut Like :statut')
+            ->setParameter('statut', '%'.$reservation.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
     //  */

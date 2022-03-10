@@ -1,15 +1,22 @@
 {% extends 'base.html.twig' %}
  {% block title %}
-     <h1> Liste des Reclamations </h1>
+      Liste des Reclamations
  {% endblock %}
 
  {% block body %}
-     <table border="1">
+     {% for message in app.flashes('info') %}
+         <div class="alert alert-success">
+             {{ message }}
+         </div>
+     {% endfor %}
+     <h1 style="margin-left:300px;text-align:center"><strong style="color:blue">Liste des reclamations</strong></h1>
+     <table border="1" class="table text-nowrap table-bordered table-striped" style="width:700px;height:90px;margin-top:1%;margin-left:100px">
          <tr>
              <th scope="row">ID</th>
              <th scope="row">Type</th>
              <th scope="row">Description</th>
              <th scope="row">Date Reclamation</th>
+             <th>Etat</th>
 
 
          </tr>
@@ -17,15 +24,22 @@
              <tr>
                  <td>{{ rec.id}} </td>
                  <td>{{ rec.type}} </td>
-                 <td>{{ rec.description }}</td>
+                 <td>{{ rec.getDescription() }}</td>
                  <td>{{ rec.getDateRec()|date('d-m-y') }}</td>
+                 <td>{% if rec.etat == 0 %} Traité {% else %} Non Traité {% endif %}</td>
+                 <td>
+                 <a  class=" {% if rec.etat == 0 %} btn btn-danger {% else %} btn btn-success {% endif %}  " href="{{ path('activedesactive', {'id': rec.id}) }}">{% if rec.etat == 0 %} Non Traité {% else %} Traité {% endif %}</a>
+                 </td>
                  <td><a href="{{  path('updatereclamation',{id:rec.id})}}"> <button class="btn btn-secondary">Modifier</button></a> </td>
                  <td><a href="{{  path('deletereclamation',{id:rec.id})}}" onclick="return confirm('Etes-vous sur de supprimer cette reclamation?');">
                          <button class="btn btn-danger" >Supprimer</button> </a></td>
              </tr>
          {% endfor %}
      </table>
-     <div style="margin-left:50px;"> <a class="btn-info" href="{{path('newreclamation')}}"> Ajouter une nouvelle Reclamation </a>
+     <ul class="pages">
+         {{ knp_pagination_render(reclamation) }}
+     </ul>
+     <div style="margin-left:300px;"> <a class="btn-info" href="{{path('newreclamation')}}"> Ajouter une nouvelle Reclamation </a>
      </div>
 
  {% endblock %}

@@ -34,7 +34,7 @@ class DestinationController extends Controller
         $form = $this->createForm(DestinationSearchType::class, $search);
         $form->handleRequest($request);
 
-        $liste_destination = $paginator->paginate($repo->findAllVisible($search), $request->query->getInt('page', 1), 3);
+        $liste_destination = $paginator->paginate($repo->findAllVisible($search), $request->query->getInt('page', 1), 4);
 
         $souscategories = $this->getDoctrine()->getRepository(SousCategorie::class)->findAll();
         $categorie = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
@@ -61,17 +61,6 @@ class DestinationController extends Controller
         ]);
     }
 
-
-
-     /**
-     * @Route("/index1", name="destination")
-     */
-    public function index1(): Response
-    {
-        return $this->render('bodyHome.html.twig', [
-            'controller_name' => 'DestinationController',
-        ]);
-    }
 
     /**
      * @Route("/Destination/ajouter", name="create_destination")

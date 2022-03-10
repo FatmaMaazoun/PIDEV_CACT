@@ -6,6 +6,7 @@ use App\Repository\ReservationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
@@ -31,11 +32,17 @@ class Reservation
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="statut is required")
      */
     private $statut;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="cout is required")
+     * @Assert\NotEqualTo(
+     *      value = 0,
+     *     message = "cout d'une Reservation ne doit pas étre égale à 0 "
+     * )
      */
     private $cout;
 
@@ -207,4 +214,5 @@ class Reservation
     {
         return  $this->statut;
     }
+
 }
